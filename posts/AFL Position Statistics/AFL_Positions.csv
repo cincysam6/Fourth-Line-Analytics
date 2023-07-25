@@ -1,0 +1,21 @@
+Position_Abbrev,Position Name,Position Type,Y,X
+SUB,Substitute,Bench,0,0
+INT,Interchange,Bench,0,0
+HBFR,Half-Back Flank Right,Defender,50,110
+FF,Full Forward,Forward,145,70
+FPL,Forward Pocket Left,Forward,145,50
+BPL,Back Pocket Left,Defender,10,55
+WL,Left Wing,Midfield,80,10
+WR,Right Wing,Midfield,80,130
+FB,Full Back,Defender,10,70
+HFFR,Half-Forward Flank,Forward,105,115
+RR,Ruck Rover,Midfield,65,82
+FPR,Forward Pocket Right,Forward,145,90
+BPR,Back Pocket Right,Defender,10,85
+HFFL,Half-Forward Flank Left,Forward,105,25
+HBFL,Half-Back Flank Left,Defender,50,15
+C,Center,Midfield,75,63
+R,Rover,Midfield,75,85
+CHB,Center Half Back,Defender,50,70
+CHF,Center Half Forward,Forward,105,70
+RK,Ruckman,Midfield,85,70

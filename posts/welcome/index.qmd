@@ -1,12 +1,16 @@
 ---
-title: "Welcome To My Blog"
-author: "Tristan O'Malley"
-date: "2023-07-16"
-categories: [news]
+title: "Welcome To Fourth Line"
+author: "Samuel Kirschner"
+date: "2023-07-20"
+categories: [misc]
 ---
 
-This is the first post in a Quarto blog. Welcome!
+Welcome to Fourth Line Analytics!
 
-![](thumbnail.jpg)
+I've thought about creating this blog for a couple of years now, but I always found it difficult to stay consistent with hobby work in sports analytics. After a full day of "data science-ing" at my day job, I found it hard to put my interest and curiosity in sports analytics into action. However, after participating in the NFL Big Data Bowl and getting Honorable Mention, and meeting a bunch of interesting sports analytics folks through the Cincinnati Sports Analytics Meetup, I decided to put some action behind these ideas. Thus, after many false starts I've finally decided to create a public site to capture my sports analytics work, book notes, tutorials, etc. on data science, sports analytics, and maybe the odd musing or two. My primary objective with this blog is mainly to capture the work I've done keep my notes in a consistent spot. Therefore, some of the posts may not be entirely targeted towards a public audience, but instead for my own benefit.
 
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+I plan for this to be a general purpose blog with analytics work broken out by sport. In addition to my own work, I want to capture notes and thoughts on any books, articles and podcasts related to Sports Analytics.
+
+The name of this blog, the fourth line, comes from the 4th line in hockey which tend to be the low skilled grinders who make the team for their hustle and grit. Nothing I put out on this blog will likely be on the bleeding edge in sports analytics, but I hope if you stumble across this portfolio of work you find at least one interesting nugget or two.
+
+Please feel free to reach out on twitter or via e-mail at Samuelckirschner\@gmail.com.

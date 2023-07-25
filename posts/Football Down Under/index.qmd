@@ -1,0 +1,17 @@
+---
+title: "Football Down Under"
+author: "Samuel Kirschner"
+date: "2023-07-20"
+categories: [AFL,Intro to AFL]
+image: "clipart-aussie-rules-football.png"
+---
+
+I wouldn't say that I am entirely new to sports analytics though the majority of the work I've done has been in private. I have a background in data science and at times have dabbled in building xG models for hockey, dug into nflfastR, participated in Kaggle competitions, and putting together an analytics based site for my family's fantasy football team. So for my inaugural analytics post, naturally I am going to start with a sport that until last week I had never watched a single game of - Aussie Rules Football.
+
+I have a newborn and like most parents with exceptionally young children I find myself awake at particularly odd hours with a bottle in hand and nothing to do but tune into the TV. July is a bit of a dry month for sports in the US and I found myself flipping between a CFL game and an Aussie Rules Football (AFL) game. I was instantly and utterly hooked. The game was a fast paced mixture of rugby and soccer played on something that looked like a cricket pitch and was intuitive enough that I could pick up roughly the rules and scoring within the first half. It was a fast paced game with a decent amount of scoring and I immediately found myself daydreaming about what cool things could be done with player tracking data.
+
+From that Collingwood vs. Freemantle game in Round 18, I watched roughly a game a night for the next 4 to 5 nights and plan to watch any game on TV through the end of the season. What excites me to tackle this as one of the first analytics topics for this blog is that I am literally a week into this sport. Unlike American sports that I've grown up watching, playing, and intimately understanding the games, Aussie Rules is an entirely foreign sport to me and I get to approach the sport and the analytics side in parallel. I plan to learn the sport through the data as much as watching the games. For instance, I have no clue what the positions players are called and if certain positions score more than others. That is an excellent question to ask the data. How much is scoring a trait that a player carries from year to year? Do certain types of players record certain important statistics?
+
+Eventually I plan to do more advanced work with what public AFL data is available. That said, the majority of my AFL posts will be not only be beginner level analytics, but ask seemingly novice level questions for those familiar with the sport. So I apologize to any AFL fan stumbling upon some of this work as it will appear overly simplistic. For American sports fans, hopefully this acts as a gateway into a sport that truly deserves more attention in America.
+
+The next few posts in my AFL series will tackle some basic questions about the game as I educate myself on the basics. I plan to use the fitzRoy R package for a majority of this work so huge thanks to the author of that package, Jimmy Day, and those who provide the underlying data that package pulls. You can see further documentation on fitzRoy [here](https://cran.r-project.org/web/packages/fitzRoy/fitzRoy.pdf). I use Wikipedia for the bulk of my understanding of the basic of the rules and the sports, but if I have something wrong please let me know. Please feel free to reach out to me on Twitter if you notice something incorrect about my understanding of the game as I work through this work or if you have any useful resources that I might be able to take advantage of.

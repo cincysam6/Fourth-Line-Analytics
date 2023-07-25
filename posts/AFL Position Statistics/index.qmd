@@ -1,0 +1,228 @@
+---
+title: "AFL Positions Explained Through Statistics"
+author: "Samuel Kirschner"
+date: "2023-07-21"
+categories: [AFL,Intro to AFL]
+image: "Aussie-rules-1-750x422.jpg"
+---
+
+### **Learning about AFL positional play through statistics**
+
+###### *Please note the data I use in this analysis is from the 2022 season courtesy of the fitzRoy package. Many of the definitions and information come thanks to Wikipedia.*
+
+The goal of this post is going to be to help an absolute novice to the sport (me) understand some of the basic counting statistics in the game and how certain positions do in those counting statistics. For instance, does a Ruck Rover typically lead the team in goals or a Full Forward? How many tackles should we expect from our full-back? This post will help answer these basic questions by looking at data from the 2022 season and plotting the per game major statistics for each position.
+
+Before diving into the data, let's start with the basics of what I know to this point. Each team has 22 players, 18 of which are on the field at each time. An AFL field takes an oval shape and according to Wikipedia for professional levels the area of play is "typically between 135--185 metres (148--202 yd) long goal-to-goal and 110--155 metres (120--170 yd) wide wing-to-wing". So we have a massive playing area much larger than a soccer pitch of NFL field on which 18 players per team are attempting to get the ball through the goal posts at either end. Unlike football (soccer) there doesn't seem to be any concept of offsides, so these players can be really anywhere on the field during the course of play. This freedom and size seems to be really intriguing from a strategic perspective as one could configure their play in a variety of ways.
+
+```{r import libraries and data, echo=FALSE}
+options(warn=-1)
+suppressMessages(library(fitzRoy))
+suppressMessages(library(dplyr))
+suppressMessages(library(ggplot2))
+suppressMessages(library(gt))
+suppressMessages(library(gtExtras))
+#devtools::install_github("SportStatisticsRSweet/AusSportGrounds")
+suppressMessages(library(AusSportGrounds))
+suppressMessages(library(ggrepel))
+suppressMessages(library(ggthemes))
+suppressMessages(library(ghibli))
+suppressMessages(library(cowplot))
+
+```
+
+```{r get player stats, echo=FALSE}
+afl_stats<-read.csv("afl_player_stats_2022.csv")
+
+```
+
+Let's take a look at what positions we have in the data. It seems that we have 20 unique position codes using abbreviations. Below is a table that gives an example of what we see. Given I don't have the knowledge to interpret these abbreviations I will have to go outside the data set to try and make some type of key to the full name for each position.
+
+```{r player positions, echo=FALSE}
+afl_stats<-afl_stats%>%rename(position = player.player.position )
+afl_stats%>%select(position)%>%unique()%>%head()%>%gt()
+```
+
+Let's breakdown these positions similar to how we'd break down football (soccer) positions on the pitch; attack, midfield and defense. In attack we have 6 players, midfield we have 6 players and defense we have 6 players. The position names are listed in the table and the associated graph shows roughly where they play on the oval.
+
+```{r field, echo=FALSE,out.width='125%',out.height='175%'}
+
+
+# Create basic AFL field
+dim <- list(length = 160,
+            width = 140)
+pos<-read.csv("AFL_Positions.csv")
+pos<-pos%>%mutate(Position.Type = as.factor(Position.Type))
+
+field<-ggplot(data = pos,aes(X,Y,fill = Position.Type)) + 
+  geom_point(aes(colour=Position.Type),size=3)+ 
+  geom_text(aes(label=Position_Abbrev,check_overlap=TRUE),position=position_dodge(width=0.9),vjust=-1,size = 3,color="white") +
+  scale_colour_ghibli_d("PonyoMedium") +
+  theme(panel.background = element_rect(fill = "#BFD834"),panel.grid = element_blank(),axis.text.y= element_blank(),axis.text.x =element_blank(),plot.title = element_text(hjust=0.5))+ 
+  xlab(element_blank())+ 
+  ylab(element_blank())+
+  guides(size='none')+
+  annotate_afl_oval(dim) + 
+  ggtitle("AFL Positions")
+
+
+
+pos_table<-pos%>%select(Position_Abbrev,Position.Name,Position.Type)%>%arrange(Position.Type)%>%gt()
+
+
+pos_table
+field
+
+
+
+
+```
+
+We can probably make some assumptions about which players might be higher in say, goals than others. Forwards are more likely than defensive players to excel in those types of stats.
+
+**An Introduction to Basic Statistics in the AFL**
+
+Before looking at the statistics broken out by position it is important for us to define some of these terms to understand what each counting statistics refers to. I am only going to pick out a few basic statistics at the moment that show up on most AFL boxscores, but will delve deeper into other statistics at a later time. To start, let's take a look at scoring and I think this image from [rookie road](https://www.rookieroad.com/australian-football/how-does-scoring-work/). Does a great job of illustrating how scoring works.
+
+![](https://www.rookieroad.com/img/australian-football/australian-football-scoring.png)
+
+-   **Goals**: This is when a player kicks the ball between the two center goal post and it is NOT touched by another player or touches either goalpost.
+
+-   **Behinds**: A *behind*, worth 1 point, is scored when the ball passes between a goal post and a behind post at any height, or if the ball hits a goal post, or if any player sends the ball between the goal posts by touching it with any part of the body other than a foot. A behind is also awarded to the attacking team if the ball touches any part of an opposition player, including a foot, before passing between the goal posts
+
+-   **Marks**: A mark is a catch of the kicked ball which earns the catching player a free kick. The catch must be clearly taken and the umpire has to deem it to be a clean position. Marks can be some of the cooler plays from my perspective as someone new to the sport. The best way I can describe it in NFL terms is as if a run play magically turned into a punt which turned into a hail mary scenario with a jump ball between the target and defenders. You can mark the ball after:
+
+    1.  A pass is completed that is longer than 10 meters
+
+    2.  Catching it in the air without anyone else touching it
+
+    3.  Catch the ball without it hitting the ground.
+
+-   **Disposals**: This is really an legally made pass either by a kick or handpass. It is how you get rid of the ball. It can approximate possession.
+
+    -   **Handballs**: Handball or handpass are disposals by hand. This is done by holding the ball in one hand and punching it with the other. It is a certain type of pass.
+
+    -   **Kicks**: Disposals by foot. Any kick type pass made by a player
+
+-   **Tackles**: Pretty straight forward, but the number of tackles recorded
+
+```{r stats, include=FALSE}
+
+
+afl_position_stats<-afl_stats%>%
+  filter(!position %in% c('SUB', 'INT'))%>%
+  select(providerId,position,goals,behinds,marks,disposals,tackles,kicks,handballs)%>%
+  group_by(position)%>%
+  mutate(games = n_distinct(providerId),
+         goals = sum(goals),
+         behinds = sum(behinds),
+         disposals = sum(disposals),
+         kicks = sum(kicks),
+         handballs = sum(handballs),
+         tackles = sum(tackles),
+         marks = sum(marks),
+         goals_per_game = round(goals/games,2),
+         behinds_per_game = round(behinds/games,2),
+         disposals_per_game = round(disposals/games,2),
+         handballs_per_game = round(handballs/games,2),
+         kicks_per_game = round(kicks/games,2),
+         tackles_per_game = round(tackles/games,2),
+         marks_per_game = round(marks/games,2)
+         )%>%select(-providerId)%>%ungroup()%>%unique()
+
+afl_pos_stats<-afl_position_stats%>%left_join(pos,by=c("position"="Position_Abbrev"))%>%select(Position.Name,everything())
+
+afl_pos_stats%>%gt()%>%tab_header(title = "2022 AFL stats - All Matches")
+```
+
+#### Per Game Stats
+
+##### Goals Per Game
+
+The graph paints a pretty self-explanatory and expected picture about which positions score more goals than others. Forward positions dominate the goal scoring with the full forward a full goal over the next highest position at 3.69 average goals per game. Scoring from a defenders position is an absolute rarity with the the half-back flanks averaging 0.28 goals a game, but full backs put up a paltry 0.07 goals per game.
+
+```{r goals, echo=FALSE}
+
+goal_plot<-ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,goals_per_game),y=goals_per_game)) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() +
+  ggtitle("Goals Per Game By Position") + xlab("") + ylab("goals per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = goals_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,4)
+
+goal_plot
+
+## Removing for now
+
+#goal_field<-ggplot(data = afl_pos_stats,aes(X,Y,fill = Position.Type)) + 
+#  geom_point(aes(colour=Position.Type),size=3)+ 
+#  geom_text(aes(label=goals_per_game,check_overlap=TRUE),position = position_nudge##(x = 0.2, y = -0.2),vjust=-1,size = 3,color="white",fontface="bold") +
+#  scale_colour_ghibli_d("PonyoMedium") +
+#  theme(panel.background = element_rect(fill = "#BFD834"),panel.grid = element_blank(),axis.text.y= element_blank(),axis.text.x =element_blank(),plot.title = element_text(hjust=0.5))+ 
+#  xlab(element_blank())+ 
+#  ylab(element_blank())+
+ # guides(size='none')+
+#  annotate_afl_oval(dim) + 
+#  ggtitle("AFL Positions") 
+
+# Arrange the plots side by side
+#side_by_side_plots <- cowplot::plot_grid(goal_plot, goal_field, ncol = 2)
+
+# Display the side-by-side plots
+#print(side_by_side_plots)
+```
+
+##### Behinds Per Game
+
+Behinds are very similar to goals in how they are scored so we'd expect a strong correlation with goals. We can see that from a position standpoint, the story plays out the same as goals.
+
+```{r behinds, echo=FALSE}
+ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,behinds_per_game),y=behinds_per_game)) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() +
+  ggtitle("Behinds Per Game By Position") + xlab("") + ylab("Behinds per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = behinds_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,4)
+```
+
+##### Tackles Per Game
+
+Tackles per game are led by the center midfield positions of Rover, Ruck Rover, and Center. While from an American perspective, one may have assumed the more defensive positions would lead in this state, it make sense having watched a few games how much of the hectic position play occurs in the midfield where teams are contesting for position. An attempted goal may take place 40 or 50 meters out meaning defenders may be playing much deeper and have less opportunities to make tackles.
+
+```{r tackles, echo=FALSE}
+ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,tackles_per_game),y=tackles_per_game)) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() +
+  ggtitle("Tackles Per Game By Position") + xlab("") + ylab("tackles per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = tackles_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,11)
+```
+
+##### Disposal Per Game
+
+Disposals are essentially "the pass" of the AFL and can be done either by hand (handballs) or foot (kicks) which I break out below. Once again, a majority your disposals come from those central midfield positions followed by some of the wing positions. Forwards tend to be much lower in these stats. This plays out similarly for handballs and kicks, though the position of Ruckman is quite interesting. we see Ruckman put out about 12 handballs per game, but come in the lowest for kicks at 14.4
+
+```{r disposals per game, echo=FALSE}
+ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,disposals_per_game),y=disposals_per_game)) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() +
+  ggtitle("Disposals Per Game By Position") + xlab("") + ylab("disposals per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = disposals_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,52)
+```
+
+```{r handballs per game, echo=FALSE}
+ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,handballs_per_game),y=handballs_per_game)) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() +
+  ggtitle("Handballs Per Game By Position") + xlab("") + ylab("handballs per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = handballs_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,25)
+```
+
+```{r kicks per game, echo=FALSE}
+ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,kicks_per_game),y=kicks_per_game)) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() +
+  ggtitle("Kicks Per Game By Position") + xlab("") + ylab("kicks per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = kicks_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,30)
+```
+
+##### Marks per Game
+
+The position with the most marks on average in a game is Center Half Back with the Full Back and Half-Back Flanks on either side following behind Center Half Back. So a Mark is something it seems a defender does more often than other positions. That said, the distribution isn't much difference from the max down to the min in terms of spread.
+
+```{r marks per game, echo=FALSE}
+ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,marks_per_game),y=marks_per_game)) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() +
+  ggtitle("Marks Per Game By Position") + xlab("") + ylab("marks per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = marks_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,25)
+```

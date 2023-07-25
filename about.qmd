@@ -1,19 +1,18 @@
 ---
 title: "About"
-image: profile.jpg
+image: sOjsc0EA_400x400.jpg
 about:
   template: jolla
   links:
     - icon: twitter
       text: Twitter
-      href: https://twitter.com
+      href: https://twitter.com/cincysam6
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com
     - icon: github
       text: Github
       href: https://github.com
-
 ---
 
-About this blog
+Fourth Line Analytics is personal blog focusing on sports analytics and data science. This is a personal blog and while the name leans towards hockey analytics, this blog will contain work on a wide variety of sports in addition to personal notes and reviews on sports analytics books, articles, etc.

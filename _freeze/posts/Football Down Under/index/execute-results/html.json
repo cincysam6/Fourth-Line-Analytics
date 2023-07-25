@@ -1,0 +1,14 @@
+{
+  "hash": "b5d98f04f1b23980c193e1c63ee7e79e",
+  "result": {
+    "markdown": "---\ntitle: \"Football Down Under\"\nauthor: \"Samuel Kirschner\"\ndate: \"2023-07-20\"\ncategories: [AFL,Intro to AFL]\nimage: \"clipart-aussie-rules_football.png\"\n---\n\n\nI wouldn't say that I am entirely new to sports analytics. I have a background in data science and at times have dabbled in building xG models for hockey, dug into nflfastR, participated in Kaggle competitions, and putting together an analytics based site for my family's fantasy football team. So for my inaugural analytics post, naturally I am going to start with a sport that until last week I had never watched a single game of - Aussie Rules Football.\n\nI have a newborn and like most parents with exceptionally young children I find myself awake at particularly odd hours with a bottle in hand and nothing to do but tune into the TV. July is a bit of a dry month for sports in the US and I found myself flipping between a CFL game and an Aussie Rules Football (AFL) game. I found myself instantly and utterly hooked. The game was a fast paced mixture of rugby and soccer played on something that looked like a cricket pitch and was intuitive enough that I could pick up roughly the rules and scoring within the first half. It was a fast paced game with a decent amount of scoring and I immediately found myself daydreaming about what cool things could be done with player tracking data.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Samuel Kirschner">
+<meta name="dcterms.date" content="2023-07-21">
+
+<title>Fourth Line Analytics - AFL Positions Explained Through Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Fourth Line Analytics</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/cincysam6"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">AFL Positions Explained Through Statistics</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">AFL</div>
+                <div class="quarto-category">Intro to AFL</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Samuel Kirschner </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 21, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="learning-about-afl-positional-play-through-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="learning-about-afl-positional-play-through-statistics"><strong>Learning about AFL positional play through statistics</strong></h3>
+<section id="please-note-the-data-i-use-in-this-analysis-is-from-the-2022-season-courtesy-of-the-fitzroy-package.-many-of-the-definitions-and-information-come-thanks-to-wikipedia." class="level6">
+<h6 class="anchored" data-anchor-id="please-note-the-data-i-use-in-this-analysis-is-from-the-2022-season-courtesy-of-the-fitzroy-package.-many-of-the-definitions-and-information-come-thanks-to-wikipedia."><em>Please note the data I use in this analysis is from the 2022 season courtesy of the fitzRoy package. Many of the definitions and information come thanks to Wikipedia.</em></h6>
+<p>The goal of this post is going to be to help an absolute novice to the sport (me) understand some of the basic counting statistics in the game and how certain positions do in those counting statistics. For instance, does a Ruck Rover typically lead the team in goals or a Full Forward? How many tackles should we expect from our full-back? This post will help answer these basic questions by looking at data from the 2022 season and plotting the per game major statistics for each position.</p>
+<p>Before diving into the data, let’s start with the basics of what I know to this point. Each team has 22 players, 18 of which are on the field at each time. An AFL field takes an oval shape and according to Wikipedia for professional levels the area of play is “typically between 135–185 metres (148–202&nbsp;yd) long goal-to-goal and 110–155 metres (120–170&nbsp;yd) wide wing-to-wing”. So we have a massive playing area much larger than a soccer pitch of NFL field on which 18 players per team are attempting to get the ball through the goal posts at either end. Unlike football (soccer) there doesn’t seem to be any concept of offsides, so these players can be really anywhere on the field during the course of play. This freedom and size seems to be really intriguing from a strategic perspective as one could configure their play in a variety of ways.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<p>Let’s take a look at what positions we have in the data. It seems that we have 20 unique position codes using abbreviations. Below is a table that gives an example of what we see. Given I don’t have the knowledge to interpret these abbreviations I will have to go outside the data set to try and make some type of key to the full name for each position.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="upjzyrbdva" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#upjzyrbdva) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#upjzyrbdva) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#upjzyrbdva) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#upjzyrbdva) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#upjzyrbdva) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#upjzyrbdva) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#upjzyrbdva) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#upjzyrbdva) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#upjzyrbdva) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#upjzyrbdva) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#upjzyrbdva) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#upjzyrbdva) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#upjzyrbdva) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upjzyrbdva) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#upjzyrbdva) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#upjzyrbdva) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upjzyrbdva) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#upjzyrbdva) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upjzyrbdva) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#upjzyrbdva) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upjzyrbdva) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#upjzyrbdva) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upjzyrbdva) .gt_left {
+  text-align: left;
+}
+
+:where(#upjzyrbdva) .gt_center {
+  text-align: center;
+}
+
+:where(#upjzyrbdva) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#upjzyrbdva) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#upjzyrbdva) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#upjzyrbdva) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#upjzyrbdva) .gt_super {
+  font-size: 65%;
+}
+
+:where(#upjzyrbdva) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#upjzyrbdva) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#upjzyrbdva) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#upjzyrbdva) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#upjzyrbdva) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#upjzyrbdva) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#upjzyrbdva) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">position</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">SUB</td></tr>
+    <tr><td class="gt_row gt_left">INT</td></tr>
+    <tr><td class="gt_row gt_left">HBFR</td></tr>
+    <tr><td class="gt_row gt_left">FF</td></tr>
+    <tr><td class="gt_row gt_left">FPL</td></tr>
+    <tr><td class="gt_row gt_left">BPL</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+<p>Let’s breakdown these positions similar to how we’d break down football (soccer) positions on the pitch; attack, midfield and defense. In attack we have 6 players, midfield we have 6 players and defense we have 6 players. The position names are listed in the table and the associated graph shows roughly where they play on the oval.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="hpgdkjgmic" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#hpgdkjgmic) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#hpgdkjgmic) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#hpgdkjgmic) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#hpgdkjgmic) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#hpgdkjgmic) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#hpgdkjgmic) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#hpgdkjgmic) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#hpgdkjgmic) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#hpgdkjgmic) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#hpgdkjgmic) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#hpgdkjgmic) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#hpgdkjgmic) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#hpgdkjgmic) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#hpgdkjgmic) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#hpgdkjgmic) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#hpgdkjgmic) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#hpgdkjgmic) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#hpgdkjgmic) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#hpgdkjgmic) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#hpgdkjgmic) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#hpgdkjgmic) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#hpgdkjgmic) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#hpgdkjgmic) .gt_left {
+  text-align: left;
+}
+
+:where(#hpgdkjgmic) .gt_center {
+  text-align: center;
+}
+
+:where(#hpgdkjgmic) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#hpgdkjgmic) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#hpgdkjgmic) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#hpgdkjgmic) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#hpgdkjgmic) .gt_super {
+  font-size: 65%;
+}
+
+:where(#hpgdkjgmic) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#hpgdkjgmic) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#hpgdkjgmic) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#hpgdkjgmic) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#hpgdkjgmic) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#hpgdkjgmic) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#hpgdkjgmic) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">Position_Abbrev</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">Position.Name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col">Position.Type</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">SUB</td>
+<td class="gt_row gt_left">Substitute</td>
+<td class="gt_row gt_center">Bench</td></tr>
+    <tr><td class="gt_row gt_left">INT</td>
+<td class="gt_row gt_left">Interchange</td>
+<td class="gt_row gt_center">Bench</td></tr>
+    <tr><td class="gt_row gt_left">HBFR</td>
+<td class="gt_row gt_left">Half-Back Flank Right</td>
+<td class="gt_row gt_center">Defender</td></tr>
+    <tr><td class="gt_row gt_left">BPL</td>
+<td class="gt_row gt_left">Back Pocket Left</td>
+<td class="gt_row gt_center">Defender</td></tr>
+    <tr><td class="gt_row gt_left">FB</td>
+<td class="gt_row gt_left">Full Back</td>
+<td class="gt_row gt_center">Defender</td></tr>
+    <tr><td class="gt_row gt_left">BPR</td>
+<td class="gt_row gt_left">Back Pocket Right</td>
+<td class="gt_row gt_center">Defender</td></tr>
+    <tr><td class="gt_row gt_left">HBFL</td>
+<td class="gt_row gt_left">Half-Back Flank Left</td>
+<td class="gt_row gt_center">Defender</td></tr>
+    <tr><td class="gt_row gt_left">CHB</td>
+<td class="gt_row gt_left">Center Half Back</td>
+<td class="gt_row gt_center">Defender</td></tr>
+    <tr><td class="gt_row gt_left">FF</td>
+<td class="gt_row gt_left">Full Forward</td>
+<td class="gt_row gt_center">Forward</td></tr>
+    <tr><td class="gt_row gt_left">FPL</td>
+<td class="gt_row gt_left">Forward Pocket Left</td>
+<td class="gt_row gt_center">Forward</td></tr>
+    <tr><td class="gt_row gt_left">HFFR</td>
+<td class="gt_row gt_left">Half-Forward Flank</td>
+<td class="gt_row gt_center">Forward</td></tr>
+    <tr><td class="gt_row gt_left">FPR</td>
+<td class="gt_row gt_left">Forward Pocket Right</td>
+<td class="gt_row gt_center">Forward</td></tr>
+    <tr><td class="gt_row gt_left">HFFL</td>
+<td class="gt_row gt_left">Half-Forward Flank Left</td>
+<td class="gt_row gt_center">Forward</td></tr>
+    <tr><td class="gt_row gt_left">CHF</td>
+<td class="gt_row gt_left">Center Half Forward</td>
+<td class="gt_row gt_center">Forward</td></tr>
+    <tr><td class="gt_row gt_left">WL</td>
+<td class="gt_row gt_left">Left Wing</td>
+<td class="gt_row gt_center">Midfield</td></tr>
+    <tr><td class="gt_row gt_left">WR</td>
+<td class="gt_row gt_left">Right Wing</td>
+<td class="gt_row gt_center">Midfield</td></tr>
+    <tr><td class="gt_row gt_left">RR</td>
+<td class="gt_row gt_left">Ruck Rover</td>
+<td class="gt_row gt_center">Midfield</td></tr>
+    <tr><td class="gt_row gt_left">C</td>
+<td class="gt_row gt_left">Center</td>
+<td class="gt_row gt_center">Midfield</td></tr>
+    <tr><td class="gt_row gt_left">R</td>
+<td class="gt_row gt_left">Rover</td>
+<td class="gt_row gt_center">Midfield</td></tr>
+    <tr><td class="gt_row gt_left">RK</td>
+<td class="gt_row gt_left">Ruckman</td>
+<td class="gt_row gt_center">Midfield</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/field-1.png" style="width:150.0%;height:250.0%"></p>
+</div>
+</div>
+<p>We can probably make some assumptions about which players might be higher in say, goals than others. Forwards are more likely than defensive players to excel in those types of stats.</p>
+<p><strong>An Introduction to Basic Statistics in the AFL</strong></p>
+<p>Before looking at the statistics broken out by position it is important for us to define some of these terms to understand what each counting statistics refers to. I am only going to pick out a few basic statistics at the moment that show up on most AFL boxscores, but will delve deeper into other statistics at a later time. To start, let’s take a look at scoring and I think this image from <a href="https://www.rookieroad.com/australian-football/how-does-scoring-work/">rookie road</a>. Does a great job of illustrating how scoring works.</p>
+<p><img src="https://www.rookieroad.com/img/australian-football/australian-football-scoring.png" class="img-fluid"></p>
+<ul>
+<li><p><strong>Goals</strong>: This is when a player kicks the ball between the two center goal post and it is NOT touched by another player or touches either goalpost.</p></li>
+<li><p><strong>Behinds</strong>: A <em>behind</em>, worth 1 point, is scored when the ball passes between a goal post and a behind post at any height, or if the ball hits a goal post, or if any player sends the ball between the goal posts by touching it with any part of the body other than a foot. A behind is also awarded to the attacking team if the ball touches any part of an opposition player, including a foot, before passing between the goal posts</p></li>
+<li><p><strong>Marks</strong>: A mark is a catch of the kicked ball which earns the catching player a free kick. The catch must be clearly taken and the umpire has to deem it to be a clean position. Marks can be some of the cooler plays from my perspective as someone new to the sport. The best way I can describe it in NFL terms is as if a run play magically turned into a punt which turned into a hail mary scenario with a jump ball between the target and defenders. You can mark the ball after:</p>
+<ol type="1">
+<li><p>A pass is completed that is longer than 10 meters</p></li>
+<li><p>Catching it in the air without anyone else touching it</p></li>
+<li><p>Catch the ball without it hitting the ground.</p></li>
+</ol></li>
+<li><p><strong>Disposals</strong>: This is really an legally made pass either by a kick or handpass. It is how you get rid of the ball. It can approximate possession.</p>
+<ul>
+<li><p><strong>Handballs</strong>: Handball or handpass are disposals by hand. This is done by holding the ball in one hand and punching it with the other. It is a certain type of pass.</p></li>
+<li><p><strong>Kicks</strong>: Disposals by foot. Any kick type pass made by a player</p></li>
+</ul></li>
+<li><p><strong>Tackles</strong>: Pretty straight forward, but the number of tackles recorded</p></li>
+</ul>
+</section>
+<section id="per-game-stats" class="level4">
+<h4 class="anchored" data-anchor-id="per-game-stats">Per Game Stats</h4>
+<section id="goals-per-game" class="level5">
+<h5 class="anchored" data-anchor-id="goals-per-game">Goals Per Game</h5>
+<p>The graph paints a pretty self-explanatory and expected picture about which positions score more goals than others. Forward positions dominate the goal scoring with the full forward a full goal over the next highest position at 3.69 average goals per game. Scoring from a defenders position is an absolute rarity with the the half-back flanks averaging 0.28 goals a game, but full backs put up a paltry 0.07 goals per game.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/goals-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="behinds-per-game" class="level5">
+<h5 class="anchored" data-anchor-id="behinds-per-game">Behinds Per Game</h5>
+<p>Behinds are very similar to goals in how they are scored so we’d expect a strong correlation with goals. We can see that from a position standpoint, the story plays out the same as goals.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/behinds-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="tackles-per-game" class="level5">
+<h5 class="anchored" data-anchor-id="tackles-per-game">Tackles Per Game</h5>
+<p>Tackles per game are led by the center midfield positions of Rover, Ruck Rover, and Center. While from an American perspective, one may have assumed the more defensive positions would lead in this state, it make sense having watched a few games how much of the hectic position play occurs in the midfield where teams are contesting for position. An attempted goal may take place 40 or 50 meters out meaning defenders may be playing much deeper and have less opportunities to make tackles.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/tackles-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="disposal-per-game" class="level5">
+<h5 class="anchored" data-anchor-id="disposal-per-game">Disposal Per Game</h5>
+<p>Disposals are essentially “the pass” of the AFL and can be done either by hand (handballs) or foot (kicks) which I break out below. Once again, a majority your disposals come from those central midfield positions followed by some of the wing positions. Forwards tend to be much lower in these stats. This plays out similarly for handballs and kicks, though the position of Ruckman is quite interesting. we see Ruckman put out about 12 handballs per game, but come in the lowest for kicks at 14.4</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/disposals per game-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/handballs per game-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/kicks per game-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="marks-per-game" class="level5">
+<h5 class="anchored" data-anchor-id="marks-per-game">Marks per Game</h5>
+<p>The position with the most marks on average in a game is Center Half Back with the Full Back and Half-Back Flanks on either side following behind Center Half Back. So a Mark is something it seems a defender does more often than other positions. That said, the distribution isn’t much difference from the max down to the min in terms of spread.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/marks per game-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
