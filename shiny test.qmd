@@ -1,0 +1,55 @@
+---
+title: "Reactive Table and Dynamic ggplot Example"
+author: "Your Name"
+date: "2023-08-07"
+runtime: shiny
+---
+
+```{r}
+
+library(shiny)
+library(ggplot2)
+
+# Sample dataset
+data <- data.frame(
+  team = c("Team A", "Team A", "Team B", "Team B", "Team C", "Team C"),
+  x = c(1, 2, 3, 4, 5, 6),
+  y = c(5, 4, 9, 6, 8, 7)
+)
+
+fluidPage(
+  titlePanel("Reactive Table and Dynamic ggplot Example"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("team", "Select Team:", choices = unique(data$team))
+    ),
+    mainPanel(
+      plotOutput("plot"),
+      tableOutput("table")
+    )
+  )
+)
+
+server <- function(input, output) {
+  output$plot <- renderPlot({
+    selected_team <- input$team
+    filtered_data <- data[data$team == selected_team, ]
+    
+    ggplot(filtered_data, aes(x = x, y = y)) +
+      geom_point() +
+      labs(title = paste("Scatter Plot for", selected_team))
+  })
+  
+  output$table <- renderTable({
+    selected_team <- input$team
+    filtered_data <- data[data$team == selected_team, ]
+    filtered_data
+  })
+}
+
+
+
+
+
+
+```
