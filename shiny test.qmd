@@ -2,6 +2,7 @@
 title: "Reactive Table and Dynamic ggplot Example"
 author: "Your Name"
 date: "2023-08-07"
+format: html
 runtime: shiny
 ---
 
