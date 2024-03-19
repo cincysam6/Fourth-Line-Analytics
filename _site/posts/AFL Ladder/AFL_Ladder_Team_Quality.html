@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,8 +96,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -131,36 +110,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Fourth Line Analytics</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/cincysam6"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/cincysam6"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -203,6 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -304,13 +286,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ladder_2022<span class="sc">%&gt;%</span><span class="fu">gt</span>()<span class="sc">%&gt;%</span><span class="fu">gt_img_rows</span>(<span class="at">columns=</span>logo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div id="dsuhleubnn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#dsuhleubnn) .gt_table {
+#dsuhleubnn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -335,7 +316,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_heading {
+#dsuhleubnn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -347,7 +328,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_title {
+#dsuhleubnn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -359,7 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#dsuhleubnn) .gt_subtitle {
+#dsuhleubnn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -371,13 +352,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#dsuhleubnn) .gt_bottom_border {
+#dsuhleubnn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_col_headings {
+#dsuhleubnn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -392,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_col_heading {
+#dsuhleubnn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -412,7 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#dsuhleubnn) .gt_column_spanner_outer {
+#dsuhleubnn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -424,15 +405,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#dsuhleubnn) .gt_column_spanner_outer:first-child {
+#dsuhleubnn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#dsuhleubnn) .gt_column_spanner_outer:last-child {
+#dsuhleubnn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#dsuhleubnn) .gt_column_spanner {
+#dsuhleubnn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -444,7 +425,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#dsuhleubnn) .gt_group_heading {
+#dsuhleubnn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -469,7 +450,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#dsuhleubnn) .gt_empty_group_heading {
+#dsuhleubnn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -484,15 +465,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#dsuhleubnn) .gt_from_md > :first-child {
+#dsuhleubnn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#dsuhleubnn) .gt_from_md > :last-child {
+#dsuhleubnn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#dsuhleubnn) .gt_row {
+#dsuhleubnn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -511,7 +492,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#dsuhleubnn) .gt_stub {
+#dsuhleubnn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -524,7 +505,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#dsuhleubnn) .gt_stub_row_group {
+#dsuhleubnn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -538,11 +519,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#dsuhleubnn) .gt_row_group_first td {
+#dsuhleubnn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#dsuhleubnn) .gt_summary_row {
+#dsuhleubnn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -552,16 +533,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#dsuhleubnn) .gt_first_summary_row {
+#dsuhleubnn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_first_summary_row.thick {
+#dsuhleubnn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#dsuhleubnn) .gt_last_summary_row {
+#dsuhleubnn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -571,7 +552,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_grand_summary_row {
+#dsuhleubnn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -581,7 +562,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#dsuhleubnn) .gt_first_grand_summary_row {
+#dsuhleubnn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -591,11 +572,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_striped {
+#dsuhleubnn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#dsuhleubnn) .gt_table_body {
+#dsuhleubnn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -604,7 +585,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_footnotes {
+#dsuhleubnn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -618,7 +599,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_footnote {
+#dsuhleubnn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -627,7 +608,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#dsuhleubnn) .gt_sourcenotes {
+#dsuhleubnn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -641,7 +622,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#dsuhleubnn) .gt_sourcenote {
+#dsuhleubnn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -649,230 +630,265 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#dsuhleubnn) .gt_left {
+#dsuhleubnn .gt_left {
   text-align: left;
 }
 
-:where(#dsuhleubnn) .gt_center {
+#dsuhleubnn .gt_center {
   text-align: center;
 }
 
-:where(#dsuhleubnn) .gt_right {
+#dsuhleubnn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#dsuhleubnn) .gt_font_normal {
+#dsuhleubnn .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#dsuhleubnn) .gt_font_bold {
+#dsuhleubnn .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#dsuhleubnn) .gt_font_italic {
+#dsuhleubnn .gt_font_italic {
   font-style: italic;
 }
 
-:where(#dsuhleubnn) .gt_super {
+#dsuhleubnn .gt_super {
   font-size: 65%;
 }
 
-:where(#dsuhleubnn) .gt_footnote_marks {
+#dsuhleubnn .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#dsuhleubnn) .gt_asterisk {
+#dsuhleubnn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#dsuhleubnn) .gt_indent_1 {
+#dsuhleubnn .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#dsuhleubnn) .gt_indent_2 {
+#dsuhleubnn .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#dsuhleubnn) .gt_indent_3 {
+#dsuhleubnn .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#dsuhleubnn) .gt_indent_4 {
+#dsuhleubnn .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#dsuhleubnn) .gt_indent_5 {
+#dsuhleubnn .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">rank</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">name</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">logo</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">played</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">pts</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">wins</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">losses</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">draws</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_right">1</td>
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">rank</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">name</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">logo</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">played</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pts</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">wins</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">losses</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">draws</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Geelong</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/geelong.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/geelong.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">72</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_right">4</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2</td>
 <td class="gt_row gt_left">Melbourne</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/melbourne.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/melbourne.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">64</td>
 <td class="gt_row gt_right">16</td>
 <td class="gt_row gt_right">6</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">3</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">3</td>
 <td class="gt_row gt_left">Sydney</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/sydney-swans.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/sydney-swans.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">64</td>
 <td class="gt_row gt_right">16</td>
 <td class="gt_row gt_right">6</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">4</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">4</td>
 <td class="gt_row gt_left">Collingwood</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/collingwood.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/collingwood.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">64</td>
 <td class="gt_row gt_right">16</td>
 <td class="gt_row gt_right">6</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">5</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">5</td>
 <td class="gt_row gt_left">Fremantle</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/fremantle.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/fremantle.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">62</td>
 <td class="gt_row gt_right">15</td>
 <td class="gt_row gt_right">6</td>
-<td class="gt_row gt_right">1</td></tr>
-    <tr><td class="gt_row gt_right">6</td>
+<td class="gt_row gt_right">1</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">6</td>
 <td class="gt_row gt_left">Brisbane Lions</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/brisbane-lions.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/brisbane-lions.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">60</td>
 <td class="gt_row gt_right">15</td>
 <td class="gt_row gt_right">7</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">7</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">7</td>
 <td class="gt_row gt_left">Richmond</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/richmond.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/richmond.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">54</td>
 <td class="gt_row gt_right">13</td>
 <td class="gt_row gt_right">8</td>
-<td class="gt_row gt_right">1</td></tr>
-    <tr><td class="gt_row gt_right">8</td>
+<td class="gt_row gt_right">1</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">8</td>
 <td class="gt_row gt_left">Western Bulldogs</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/western-bulldogs.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/western-bulldogs.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">48</td>
 <td class="gt_row gt_right">12</td>
 <td class="gt_row gt_right">10</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">9</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">9</td>
 <td class="gt_row gt_left">Carlton</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/carlton.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/carlton.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">48</td>
 <td class="gt_row gt_right">12</td>
 <td class="gt_row gt_right">10</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">10</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">10</td>
 <td class="gt_row gt_left">St Kilda</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/st-kilda.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/st-kilda.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">44</td>
 <td class="gt_row gt_right">11</td>
 <td class="gt_row gt_right">11</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">11</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">11</td>
 <td class="gt_row gt_left">Port Adelaide</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/port-adelaide.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/port-adelaide.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">40</td>
 <td class="gt_row gt_right">10</td>
 <td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">12</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">12</td>
 <td class="gt_row gt_left">Gold Coast</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/suns.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/suns.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">40</td>
 <td class="gt_row gt_right">10</td>
 <td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">13</td>
 <td class="gt_row gt_left">Hawthorn</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/hawthorn-football.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/hawthorn-football.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">32</td>
 <td class="gt_row gt_right">8</td>
 <td class="gt_row gt_right">14</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">14</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">14</td>
 <td class="gt_row gt_left">Adelaide</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/adelaide.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/adelaide.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">32</td>
 <td class="gt_row gt_right">8</td>
 <td class="gt_row gt_right">14</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">15</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">15</td>
 <td class="gt_row gt_left">Essendon</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/essendon.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/essendon.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">28</td>
 <td class="gt_row gt_right">7</td>
 <td class="gt_row gt_right">15</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">16</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">16</td>
 <td class="gt_row gt_left">Greater Western Sydney</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/giants.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/giants.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">24</td>
 <td class="gt_row gt_right">6</td>
 <td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">17</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">17</td>
 <td class="gt_row gt_left">West Coast</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/west-coast-eagles.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/west-coast-eagles.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">8</td>
 <td class="gt_row gt_right">2</td>
 <td class="gt_row gt_right">20</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">18</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">North Melbourne</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/north-melbourne.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/north-melbourne.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">8</td>
 <td class="gt_row gt_right">2</td>
 <td class="gt_row gt_right">20</td>
-<td class="gt_row gt_right">0</td></tr>
-  </tbody>
-  
-  
+<td class="gt_row gt_right">0</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -883,13 +899,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>champs<span class="sc">%&gt;%</span><span class="fu">gt</span>()<span class="sc">%&gt;%</span><span class="fu">gt_img_rows</span>(<span class="at">columns=</span>logo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div id="gvghhggjiu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#gvghhggjiu) .gt_table {
+#gvghhggjiu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -914,7 +929,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_heading {
+#gvghhggjiu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -926,7 +941,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_title {
+#gvghhggjiu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -938,7 +953,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#gvghhggjiu) .gt_subtitle {
+#gvghhggjiu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -950,13 +965,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#gvghhggjiu) .gt_bottom_border {
+#gvghhggjiu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_col_headings {
+#gvghhggjiu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -971,7 +986,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_col_heading {
+#gvghhggjiu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -991,7 +1006,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#gvghhggjiu) .gt_column_spanner_outer {
+#gvghhggjiu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1003,15 +1018,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#gvghhggjiu) .gt_column_spanner_outer:first-child {
+#gvghhggjiu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#gvghhggjiu) .gt_column_spanner_outer:last-child {
+#gvghhggjiu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#gvghhggjiu) .gt_column_spanner {
+#gvghhggjiu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1023,7 +1038,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#gvghhggjiu) .gt_group_heading {
+#gvghhggjiu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1048,7 +1063,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#gvghhggjiu) .gt_empty_group_heading {
+#gvghhggjiu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1063,15 +1078,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#gvghhggjiu) .gt_from_md > :first-child {
+#gvghhggjiu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#gvghhggjiu) .gt_from_md > :last-child {
+#gvghhggjiu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#gvghhggjiu) .gt_row {
+#gvghhggjiu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1090,7 +1105,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#gvghhggjiu) .gt_stub {
+#gvghhggjiu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1103,7 +1118,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#gvghhggjiu) .gt_stub_row_group {
+#gvghhggjiu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1117,11 +1132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#gvghhggjiu) .gt_row_group_first td {
+#gvghhggjiu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#gvghhggjiu) .gt_summary_row {
+#gvghhggjiu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1131,16 +1146,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#gvghhggjiu) .gt_first_summary_row {
+#gvghhggjiu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_first_summary_row.thick {
+#gvghhggjiu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#gvghhggjiu) .gt_last_summary_row {
+#gvghhggjiu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1150,7 +1165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_grand_summary_row {
+#gvghhggjiu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1160,7 +1175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#gvghhggjiu) .gt_first_grand_summary_row {
+#gvghhggjiu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1170,11 +1185,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_striped {
+#gvghhggjiu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#gvghhggjiu) .gt_table_body {
+#gvghhggjiu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1183,7 +1198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_footnotes {
+#gvghhggjiu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1197,7 +1212,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_footnote {
+#gvghhggjiu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1206,7 +1221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#gvghhggjiu) .gt_sourcenotes {
+#gvghhggjiu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1220,7 +1235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#gvghhggjiu) .gt_sourcenote {
+#gvghhggjiu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1228,195 +1243,218 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#gvghhggjiu) .gt_left {
+#gvghhggjiu .gt_left {
   text-align: left;
 }
 
-:where(#gvghhggjiu) .gt_center {
+#gvghhggjiu .gt_center {
   text-align: center;
 }
 
-:where(#gvghhggjiu) .gt_right {
+#gvghhggjiu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#gvghhggjiu) .gt_font_normal {
+#gvghhggjiu .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#gvghhggjiu) .gt_font_bold {
+#gvghhggjiu .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#gvghhggjiu) .gt_font_italic {
+#gvghhggjiu .gt_font_italic {
   font-style: italic;
 }
 
-:where(#gvghhggjiu) .gt_super {
+#gvghhggjiu .gt_super {
   font-size: 65%;
 }
 
-:where(#gvghhggjiu) .gt_footnote_marks {
+#gvghhggjiu .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#gvghhggjiu) .gt_asterisk {
+#gvghhggjiu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#gvghhggjiu) .gt_indent_1 {
+#gvghhggjiu .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#gvghhggjiu) .gt_indent_2 {
+#gvghhggjiu .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#gvghhggjiu) .gt_indent_3 {
+#gvghhggjiu .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#gvghhggjiu) .gt_indent_4 {
+#gvghhggjiu .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#gvghhggjiu) .gt_indent_5 {
+#gvghhggjiu .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">year</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">rank</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">name</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">logo</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">played</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">pts</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">wins</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">losses</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">draws</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_right">2022</td>
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">year</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">rank</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">name</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">logo</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">played</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pts</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">wins</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">losses</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">draws</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right">2022</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Geelong</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/geelong.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/geelong.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">72</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_right">4</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2021</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2021</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Melbourne</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/melbourne.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/melbourne.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">70</td>
 <td class="gt_row gt_right">17</td>
 <td class="gt_row gt_right">4</td>
-<td class="gt_row gt_right">1</td></tr>
-    <tr><td class="gt_row gt_right">2020</td>
+<td class="gt_row gt_right">1</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2020</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Port Adelaide</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/port-adelaide.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/port-adelaide.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">17</td>
 <td class="gt_row gt_right">56</td>
 <td class="gt_row gt_right">14</td>
 <td class="gt_row gt_right">3</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2019</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2019</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Geelong</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/geelong.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/geelong.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">64</td>
 <td class="gt_row gt_right">16</td>
 <td class="gt_row gt_right">6</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2018</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2018</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Richmond</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/richmond.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/richmond.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">72</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_right">4</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2017</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2017</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Adelaide</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/adelaide.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/adelaide.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">62</td>
 <td class="gt_row gt_right">15</td>
 <td class="gt_row gt_right">6</td>
-<td class="gt_row gt_right">1</td></tr>
-    <tr><td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_right">1</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2016</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Sydney</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/sydney-swans.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/sydney-swans.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">68</td>
 <td class="gt_row gt_right">17</td>
 <td class="gt_row gt_right">5</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2015</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Fremantle</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/fremantle.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/fremantle.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">68</td>
 <td class="gt_row gt_right">17</td>
 <td class="gt_row gt_right">5</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2014</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2014</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Sydney</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/sydney-swans.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/sydney-swans.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">68</td>
 <td class="gt_row gt_right">17</td>
 <td class="gt_row gt_right">5</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2013</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2013</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Hawthorn</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/hawthorn-football.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/hawthorn-football.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">76</td>
 <td class="gt_row gt_right">19</td>
 <td class="gt_row gt_right">3</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2012</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2012</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Hawthorn</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/hawthorn-football.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/hawthorn-football.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">68</td>
 <td class="gt_row gt_right">17</td>
 <td class="gt_row gt_right">5</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2011</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2011</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_left">Collingwood</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/collingwood.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/collingwood.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">80</td>
 <td class="gt_row gt_right">20</td>
 <td class="gt_row gt_right">2</td>
-<td class="gt_row gt_right">0</td></tr>
-  </tbody>
-  
-  
+<td class="gt_row gt_right">0</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -1426,13 +1464,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>wooden_spoon<span class="sc">%&gt;%</span><span class="fu">gt</span>()<span class="sc">%&gt;%</span><span class="fu">gt_img_rows</span>(<span class="at">columns=</span>logo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div id="cuxpxwebsu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#cuxpxwebsu) .gt_table {
+#cuxpxwebsu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1457,7 +1494,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_heading {
+#cuxpxwebsu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1469,7 +1506,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_title {
+#cuxpxwebsu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1481,7 +1518,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#cuxpxwebsu) .gt_subtitle {
+#cuxpxwebsu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1493,13 +1530,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#cuxpxwebsu) .gt_bottom_border {
+#cuxpxwebsu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_col_headings {
+#cuxpxwebsu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1514,7 +1551,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_col_heading {
+#cuxpxwebsu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1534,7 +1571,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#cuxpxwebsu) .gt_column_spanner_outer {
+#cuxpxwebsu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1546,15 +1583,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#cuxpxwebsu) .gt_column_spanner_outer:first-child {
+#cuxpxwebsu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#cuxpxwebsu) .gt_column_spanner_outer:last-child {
+#cuxpxwebsu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#cuxpxwebsu) .gt_column_spanner {
+#cuxpxwebsu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1566,7 +1603,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#cuxpxwebsu) .gt_group_heading {
+#cuxpxwebsu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1591,7 +1628,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#cuxpxwebsu) .gt_empty_group_heading {
+#cuxpxwebsu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1606,15 +1643,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#cuxpxwebsu) .gt_from_md > :first-child {
+#cuxpxwebsu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#cuxpxwebsu) .gt_from_md > :last-child {
+#cuxpxwebsu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#cuxpxwebsu) .gt_row {
+#cuxpxwebsu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1633,7 +1670,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#cuxpxwebsu) .gt_stub {
+#cuxpxwebsu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1646,7 +1683,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cuxpxwebsu) .gt_stub_row_group {
+#cuxpxwebsu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1660,11 +1697,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#cuxpxwebsu) .gt_row_group_first td {
+#cuxpxwebsu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#cuxpxwebsu) .gt_summary_row {
+#cuxpxwebsu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1674,16 +1711,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cuxpxwebsu) .gt_first_summary_row {
+#cuxpxwebsu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_first_summary_row.thick {
+#cuxpxwebsu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#cuxpxwebsu) .gt_last_summary_row {
+#cuxpxwebsu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1693,7 +1730,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_grand_summary_row {
+#cuxpxwebsu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1703,7 +1740,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cuxpxwebsu) .gt_first_grand_summary_row {
+#cuxpxwebsu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1713,11 +1750,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_striped {
+#cuxpxwebsu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#cuxpxwebsu) .gt_table_body {
+#cuxpxwebsu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1726,7 +1763,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_footnotes {
+#cuxpxwebsu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1740,7 +1777,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_footnote {
+#cuxpxwebsu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1749,7 +1786,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cuxpxwebsu) .gt_sourcenotes {
+#cuxpxwebsu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1763,7 +1800,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#cuxpxwebsu) .gt_sourcenote {
+#cuxpxwebsu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1771,186 +1808,207 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cuxpxwebsu) .gt_left {
+#cuxpxwebsu .gt_left {
   text-align: left;
 }
 
-:where(#cuxpxwebsu) .gt_center {
+#cuxpxwebsu .gt_center {
   text-align: center;
 }
 
-:where(#cuxpxwebsu) .gt_right {
+#cuxpxwebsu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#cuxpxwebsu) .gt_font_normal {
+#cuxpxwebsu .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#cuxpxwebsu) .gt_font_bold {
+#cuxpxwebsu .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#cuxpxwebsu) .gt_font_italic {
+#cuxpxwebsu .gt_font_italic {
   font-style: italic;
 }
 
-:where(#cuxpxwebsu) .gt_super {
+#cuxpxwebsu .gt_super {
   font-size: 65%;
 }
 
-:where(#cuxpxwebsu) .gt_footnote_marks {
+#cuxpxwebsu .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#cuxpxwebsu) .gt_asterisk {
+#cuxpxwebsu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#cuxpxwebsu) .gt_indent_1 {
+#cuxpxwebsu .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#cuxpxwebsu) .gt_indent_2 {
+#cuxpxwebsu .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#cuxpxwebsu) .gt_indent_3 {
+#cuxpxwebsu .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#cuxpxwebsu) .gt_indent_4 {
+#cuxpxwebsu .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#cuxpxwebsu) .gt_indent_5 {
+#cuxpxwebsu .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">year</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">rank</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">name</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">logo</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">played</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">pts</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">wins</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">losses</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">draws</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_right">2022</td>
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">year</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">rank</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">name</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">logo</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">played</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pts</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">wins</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">losses</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">draws</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right">2022</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">North Melbourne</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/north-melbourne.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/north-melbourne.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">8</td>
 <td class="gt_row gt_right">2</td>
 <td class="gt_row gt_right">20</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2021</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2021</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">North Melbourne</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/north-melbourne.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/north-melbourne.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_right">4</td>
 <td class="gt_row gt_right">17</td>
-<td class="gt_row gt_right">1</td></tr>
-    <tr><td class="gt_row gt_right">2020</td>
+<td class="gt_row gt_right">1</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2020</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">Adelaide</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/adelaide.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/adelaide.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">17</td>
 <td class="gt_row gt_right">12</td>
 <td class="gt_row gt_right">3</td>
 <td class="gt_row gt_right">14</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2019</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2019</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">Gold Coast</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/suns.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/suns.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">12</td>
 <td class="gt_row gt_right">3</td>
 <td class="gt_row gt_right">19</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2018</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2018</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">Carlton</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/carlton.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/carlton.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">8</td>
 <td class="gt_row gt_right">2</td>
 <td class="gt_row gt_right">20</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2017</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2017</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">Brisbane Lions</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/brisbane-lions.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/brisbane-lions.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">20</td>
 <td class="gt_row gt_right">5</td>
 <td class="gt_row gt_right">17</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2016</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">Essendon</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/essendon.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/essendon.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">12</td>
 <td class="gt_row gt_right">3</td>
 <td class="gt_row gt_right">19</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2015</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">Carlton</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/carlton.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/carlton.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">16</td>
 <td class="gt_row gt_right">4</td>
 <td class="gt_row gt_right">18</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2014</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2014</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">St Kilda</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/st-kilda.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/st-kilda.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">16</td>
 <td class="gt_row gt_right">4</td>
 <td class="gt_row gt_right">18</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2013</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right">2013</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">Greater Western Sydney</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/giants.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/giants.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">4</td>
 <td class="gt_row gt_right">1</td>
 <td class="gt_row gt_right">21</td>
-<td class="gt_row gt_right">0</td></tr>
-    <tr><td class="gt_row gt_right">2012</td>
+<td class="gt_row gt_right">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right">2012</td>
 <td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">Greater Western Sydney</td>
-<td class="gt_row gt_left"><img src="https://logotyp.us/file/giants.svg" style="height:30px;"></td>
+<td class="gt_row gt_left"><img src="https://logotyp.us/file/giants.svg" class="img-fluid" style="height:30px;"></td>
 <td class="gt_row gt_right">22</td>
 <td class="gt_row gt_right">8</td>
 <td class="gt_row gt_right">2</td>
 <td class="gt_row gt_right">20</td>
-<td class="gt_row gt_right">0</td></tr>
-  </tbody>
-  
-  
+<td class="gt_row gt_right">0</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -1973,7 +2031,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="AFL_Ladder_Team_Quality_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="AFL_Ladder_Team_Quality_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -1993,7 +2055,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="AFL_Ladder_Team_Quality_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="AFL_Ladder_Team_Quality_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Comparing the two teams we can confidently say the past decade has been easier on Geelong fans than Melbourne fans. We do see a pretty stark difference between the two clubs with North Melbourne finishing above Geelong only once. Like American sports, we just see some organizations are better at being consistent contenders than others.</p>
@@ -2017,7 +2083,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="AFL_Ladder_Team_Quality_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="AFL_Ladder_Team_Quality_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>One measure of stability is to look at the correlation between the prior year rank to the current year rank. A correlation close to 1 suggests year to year correlation has a positive relationship. If you were good you are likely good next year and vice versa. With this data, we observe a 0.567 correlation which is a pretty strong positive correlation. This means team quality won’t very much at least on a year to year time frame. If we did this for say a three year window we would expect a weaker correlation.</p>
@@ -2054,7 +2124,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"AFL Team Ranks 2011-2022"</span>) <span class="sc">+</span> <span class="fu">coord_flip</span>()</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="AFL_Ladder_Team_Quality_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="AFL_Ladder_Team_Quality_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 
@@ -2090,9 +2164,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -2128,10 +2216,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2141,8 +2228,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2157,6 +2253,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -2197,6 +2525,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

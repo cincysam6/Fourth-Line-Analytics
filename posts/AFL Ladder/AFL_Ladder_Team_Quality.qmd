@@ -4,6 +4,9 @@ author: "Samuel Kirschner"
 date: "2023-07-24"
 categories: [AFL,Intro to AFL]
 image: "afl-ladder.jpg"
+format: 
+  html:
+    code-folding: hide
 ---
 
 ```{r import, include=FALSE}

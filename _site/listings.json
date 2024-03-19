@@ -2,8 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/AFL Ladder/AFL_Ladder_Team_Quality.html",
       "/posts/AFL Position Statistics/PositionsExplained.html",
+      "/posts/AFL Ladder/AFL_Ladder_Team_Quality.html",
+      "/posts/AFL Ladder/AFL_Ladder_Team_Quality.html",
+      "/posts/Whos Good AFL Players/WhosGoodAFLPlayers.html",
       "/posts/Football Down Under/FootballDownUnder.html",
       "/posts/welcome/index.html"
     ]

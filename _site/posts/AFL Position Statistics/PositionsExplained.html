@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Samuel Kirschner">
-<meta name="dcterms.date" content="2023-07-21">
+<meta name="dcterms.date" content="2024-02-07">
 
-<title>Fourth Line Analytics - AFL Positions Explained Through Statistics</title>
+<title>Fourth Line Analytics - Position Primer: Basic Stats by AFL Position</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,8 +19,42 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -47,7 +81,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -56,8 +96,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -68,36 +110,38 @@ ul.task-list li input[type="checkbox"] {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Fourth Line Analytics</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/cincysam6"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/cincysam6"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -105,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">AFL Positions Explained Through Statistics</h1>
+      <h1 class="title">Position Primer: Basic Stats by AFL Position</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">AFL</div>
                 <div class="quarto-category">Intro to AFL</div>
@@ -126,7 +170,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 21, 2023</p>
+        <p class="date">February 7, 2024</p>
       </div>
     </div>
     
@@ -144,30 +188,50 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <section id="learning-about-afl-positional-play-through-statistics" class="level3">
 <h3 class="anchored" data-anchor-id="learning-about-afl-positional-play-through-statistics"><strong>Learning about AFL positional play through statistics</strong></h3>
 <section id="please-note-the-data-i-use-in-this-analysis-is-from-the-2022-season-courtesy-of-the-fitzroy-package.-many-of-the-definitions-and-information-come-thanks-to-wikipedia." class="level6">
 <h6 class="anchored" data-anchor-id="please-note-the-data-i-use-in-this-analysis-is-from-the-2022-season-courtesy-of-the-fitzroy-package.-many-of-the-definitions-and-information-come-thanks-to-wikipedia."><em>Please note the data I use in this analysis is from the 2022 season courtesy of the fitzRoy package. Many of the definitions and information come thanks to Wikipedia.</em></h6>
 <p>The goal of this post is going to be to help an absolute novice to the sport (me) understand some of the basic counting statistics in the game and how certain positions do in those counting statistics. For instance, does a Ruck Rover typically lead the team in goals or a Full Forward? How many tackles should we expect from our full-back? This post will help answer these basic questions by looking at data from the 2022 season and plotting the per game major statistics for each position.</p>
 <p>Before diving into the data, let’s start with the basics of what I know to this point. Each team has 22 players, 18 of which are on the field at each time. An AFL field takes an oval shape and according to Wikipedia for professional levels the area of play is “typically between 135–185 metres (148–202&nbsp;yd) long goal-to-goal and 110–155 metres (120–170&nbsp;yd) wide wing-to-wing”. So we have a massive playing area much larger than a soccer pitch of NFL field on which 18 players per team are attempting to get the ball through the goal posts at either end. Unlike football (soccer) there doesn’t seem to be any concept of offsides, so these players can be really anywhere on the field during the course of play. This freedom and size seems to be really intriguing from a strategic perspective as one could configure their play in a variety of ways.</p>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 <p>Let’s take a look at what positions we have in the data. It seems that we have 20 unique position codes using abbreviations. Below is a table that gives an example of what we see. Given I don’t have the knowledge to interpret these abbreviations I will have to go outside the data set to try and make some type of key to the full name for each position.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>afl_stats<span class="ot">&lt;-</span>afl_stats<span class="sc">%&gt;%</span><span class="fu">rename</span>(<span class="at">position =</span> player.player.position)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>afl_stats <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(position) <span class="sc">%&gt;%</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"AFL Player Position Abbreviations"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">md</span>(<span class="st">"**Position**"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  gtExtras<span class="sc">::</span><span class="fu">gt_theme_espn</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<div id="djaxpbotfl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="hzbygfdsps" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#hzbygfdsps table {
+  font-family: Lato, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-:where(#djaxpbotfl) .gt_table {
+#hzbygfdsps thead, #hzbygfdsps tbody, #hzbygfdsps tfoot, #hzbygfdsps tr, #hzbygfdsps td, #hzbygfdsps th {
+  border-style: none;
+}
+
+#hzbygfdsps p {
+  margin: 0;
+  padding: 0;
+}
+
+#hzbygfdsps .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -177,8 +241,8 @@ ul.task-list li input[type="checkbox"] {
   background-color: #FFFFFF;
   width: auto;
   border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
+  border-top-width: 3px;
+  border-top-color: #FFFFFF;
   border-right-style: none;
   border-right-width: 2px;
   border-right-color: #D3D3D3;
@@ -190,21 +254,14 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#hzbygfdsps .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-:where(#djaxpbotfl) .gt_title {
+#hzbygfdsps .gt_title {
   color: #333333;
-  font-size: 125%;
+  font-size: 24px;
   font-weight: initial;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -214,25 +271,37 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-:where(#djaxpbotfl) .gt_subtitle {
+#hzbygfdsps .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-:where(#djaxpbotfl) .gt_bottom_border {
+#hzbygfdsps .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hzbygfdsps .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_col_headings {
+#hzbygfdsps .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -247,12 +316,12 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_col_heading {
+#hzbygfdsps .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
   border-left-style: none;
   border-left-width: 1px;
   border-left-color: #D3D3D3;
@@ -267,27 +336,27 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-:where(#djaxpbotfl) .gt_column_spanner_outer {
+#hzbygfdsps .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-:where(#djaxpbotfl) .gt_column_spanner_outer:first-child {
+#hzbygfdsps .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#djaxpbotfl) .gt_column_spanner_outer:last-child {
+#hzbygfdsps .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#djaxpbotfl) .gt_column_spanner {
+#hzbygfdsps .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -299,16 +368,20 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-:where(#djaxpbotfl) .gt_group_heading {
+#hzbygfdsps .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#hzbygfdsps .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
   padding-right: 5px;
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -322,14 +395,15 @@ ul.task-list li input[type="checkbox"] {
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-:where(#djaxpbotfl) .gt_empty_group_heading {
+#hzbygfdsps .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
+  font-size: 80%;
+  font-weight: bolder;
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -339,23 +413,23 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-:where(#djaxpbotfl) .gt_from_md > :first-child {
+#hzbygfdsps .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#djaxpbotfl) .gt_from_md > :last-child {
+#hzbygfdsps .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#djaxpbotfl) .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
+#hzbygfdsps .gt_row {
+  padding-top: 7px;
+  padding-bottom: 7px;
   padding-left: 5px;
   padding-right: 5px;
   margin: 10px;
   border-top-style: solid;
   border-top-width: 1px;
-  border-top-color: #D3D3D3;
+  border-top-color: #F6F7F7;
   border-left-style: none;
   border-left-width: 1px;
   border-left-color: #D3D3D3;
@@ -366,12 +440,12 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-:where(#djaxpbotfl) .gt_stub {
+#hzbygfdsps .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #D3D3D3;
@@ -379,7 +453,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-:where(#djaxpbotfl) .gt_stub_row_group {
+#hzbygfdsps .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -393,11 +467,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-:where(#djaxpbotfl) .gt_row_group_first td {
+#hzbygfdsps .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#djaxpbotfl) .gt_summary_row {
+#hzbygfdsps .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#hzbygfdsps .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -407,16 +485,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-:where(#djaxpbotfl) .gt_first_summary_row {
+#hzbygfdsps .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_first_summary_row.thick {
+#hzbygfdsps .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#djaxpbotfl) .gt_last_summary_row {
+#hzbygfdsps .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -426,7 +504,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_grand_summary_row {
+#hzbygfdsps .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -436,7 +514,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-:where(#djaxpbotfl) .gt_first_grand_summary_row {
+#hzbygfdsps .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -446,11 +524,21 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
+#hzbygfdsps .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_table_body {
+#hzbygfdsps .gt_striped {
+  background-color: #FAFAFA;
+}
+
+#hzbygfdsps .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -459,7 +547,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_footnotes {
+#hzbygfdsps .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -473,30 +561,8 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-:where(#djaxpbotfl) .gt_footnote {
+#hzbygfdsps .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#djaxpbotfl) .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#djaxpbotfl) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -504,100 +570,188 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-:where(#djaxpbotfl) .gt_left {
+#hzbygfdsps .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hzbygfdsps .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hzbygfdsps .gt_left {
   text-align: left;
 }
 
-:where(#djaxpbotfl) .gt_center {
+#hzbygfdsps .gt_center {
   text-align: center;
 }
 
-:where(#djaxpbotfl) .gt_right {
+#hzbygfdsps .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#djaxpbotfl) .gt_font_normal {
+#hzbygfdsps .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#djaxpbotfl) .gt_font_bold {
+#hzbygfdsps .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#djaxpbotfl) .gt_font_italic {
+#hzbygfdsps .gt_font_italic {
   font-style: italic;
 }
 
-:where(#djaxpbotfl) .gt_super {
+#hzbygfdsps .gt_super {
   font-size: 65%;
 }
 
-:where(#djaxpbotfl) .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#hzbygfdsps .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-:where(#djaxpbotfl) .gt_asterisk {
+#hzbygfdsps .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#djaxpbotfl) .gt_indent_1 {
+#hzbygfdsps .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#djaxpbotfl) .gt_indent_2 {
+#hzbygfdsps .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#djaxpbotfl) .gt_indent_3 {
+#hzbygfdsps .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#djaxpbotfl) .gt_indent_4 {
+#hzbygfdsps .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#djaxpbotfl) .gt_indent_5 {
+#hzbygfdsps .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">position</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left">SUB</td></tr>
-    <tr><td class="gt_row gt_left">INT</td></tr>
-    <tr><td class="gt_row gt_left">HBFR</td></tr>
-    <tr><td class="gt_row gt_left">FF</td></tr>
-    <tr><td class="gt_row gt_left">FPL</td></tr>
-    <tr><td class="gt_row gt_left">BPL</td></tr>
-  </tbody>
-  
-  
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th class="gt_heading gt_title gt_font_normal gt_bottom_border">AFL Player Position Abbreviations</th>
+</tr>
+<tr class="odd gt_col_headings">
+<th id="<strong>Position</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Position</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">SUB</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">INT</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">HBFR</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">FF</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">FPL</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">BPL</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">WL</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">WR</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">FB</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">HFFR</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">RR</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">FPR</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">BPR</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">HFFL</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">HBFL</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">C</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">R</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">CHB</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="position">CHF</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="position">RK</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
 <p>Let’s breakdown these positions similar to how we’d break down football (soccer) positions on the pitch; attack, midfield and defense. In attack we have 6 players, midfield we have 6 players and defense we have 6 players. The position names are listed in the table and the associated graph shows roughly where they play on the oval.</p>
 <div class="cell">
 <div class="cell-output-display">
-
-<div id="kxdsbmgrbh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="xtysrnkflc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xtysrnkflc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-:where(#kxdsbmgrbh) .gt_table {
+#xtysrnkflc thead, #xtysrnkflc tbody, #xtysrnkflc tfoot, #xtysrnkflc tr, #xtysrnkflc td, #xtysrnkflc th {
+  border-style: none;
+}
+
+#xtysrnkflc p {
+  margin: 0;
+  padding: 0;
+}
+
+#xtysrnkflc .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -620,19 +774,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-:where(#kxdsbmgrbh) .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#xtysrnkflc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-:where(#kxdsbmgrbh) .gt_title {
+#xtysrnkflc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -644,25 +791,37 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-:where(#kxdsbmgrbh) .gt_subtitle {
+#xtysrnkflc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-:where(#kxdsbmgrbh) .gt_bottom_border {
+#xtysrnkflc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xtysrnkflc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kxdsbmgrbh) .gt_col_headings {
+#xtysrnkflc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -677,7 +836,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-:where(#kxdsbmgrbh) .gt_col_heading {
+#xtysrnkflc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -697,7 +856,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-:where(#kxdsbmgrbh) .gt_column_spanner_outer {
+#xtysrnkflc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -709,15 +868,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-:where(#kxdsbmgrbh) .gt_column_spanner_outer:first-child {
+#xtysrnkflc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#kxdsbmgrbh) .gt_column_spanner_outer:last-child {
+#xtysrnkflc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#kxdsbmgrbh) .gt_column_spanner {
+#xtysrnkflc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -729,7 +888,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-:where(#kxdsbmgrbh) .gt_group_heading {
+#xtysrnkflc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#xtysrnkflc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -752,9 +915,10 @@ ul.task-list li input[type="checkbox"] {
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-:where(#kxdsbmgrbh) .gt_empty_group_heading {
+#xtysrnkflc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -769,15 +933,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-:where(#kxdsbmgrbh) .gt_from_md > :first-child {
+#xtysrnkflc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#kxdsbmgrbh) .gt_from_md > :last-child {
+#xtysrnkflc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#kxdsbmgrbh) .gt_row {
+#xtysrnkflc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -796,7 +960,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-:where(#kxdsbmgrbh) .gt_stub {
+#xtysrnkflc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -809,7 +973,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-:where(#kxdsbmgrbh) .gt_stub_row_group {
+#xtysrnkflc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -823,11 +987,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-:where(#kxdsbmgrbh) .gt_row_group_first td {
+#xtysrnkflc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#kxdsbmgrbh) .gt_summary_row {
+#xtysrnkflc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#xtysrnkflc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -837,16 +1005,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-:where(#kxdsbmgrbh) .gt_first_summary_row {
+#xtysrnkflc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#kxdsbmgrbh) .gt_first_summary_row.thick {
+#xtysrnkflc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#kxdsbmgrbh) .gt_last_summary_row {
+#xtysrnkflc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -856,7 +1024,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kxdsbmgrbh) .gt_grand_summary_row {
+#xtysrnkflc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -866,7 +1034,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-:where(#kxdsbmgrbh) .gt_first_grand_summary_row {
+#xtysrnkflc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -876,11 +1044,21 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-:where(#kxdsbmgrbh) .gt_striped {
+#xtysrnkflc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xtysrnkflc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#kxdsbmgrbh) .gt_table_body {
+#xtysrnkflc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -889,7 +1067,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kxdsbmgrbh) .gt_footnotes {
+#xtysrnkflc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -903,30 +1081,8 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-:where(#kxdsbmgrbh) .gt_footnote {
+#xtysrnkflc .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#kxdsbmgrbh) .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#kxdsbmgrbh) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -934,145 +1090,212 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-:where(#kxdsbmgrbh) .gt_left {
+#xtysrnkflc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xtysrnkflc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xtysrnkflc .gt_left {
   text-align: left;
 }
 
-:where(#kxdsbmgrbh) .gt_center {
+#xtysrnkflc .gt_center {
   text-align: center;
 }
 
-:where(#kxdsbmgrbh) .gt_right {
+#xtysrnkflc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#kxdsbmgrbh) .gt_font_normal {
+#xtysrnkflc .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#kxdsbmgrbh) .gt_font_bold {
+#xtysrnkflc .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#kxdsbmgrbh) .gt_font_italic {
+#xtysrnkflc .gt_font_italic {
   font-style: italic;
 }
 
-:where(#kxdsbmgrbh) .gt_super {
+#xtysrnkflc .gt_super {
   font-size: 65%;
 }
 
-:where(#kxdsbmgrbh) .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#xtysrnkflc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-:where(#kxdsbmgrbh) .gt_asterisk {
+#xtysrnkflc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#kxdsbmgrbh) .gt_indent_1 {
+#xtysrnkflc .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#kxdsbmgrbh) .gt_indent_2 {
+#xtysrnkflc .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#kxdsbmgrbh) .gt_indent_3 {
+#xtysrnkflc .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#kxdsbmgrbh) .gt_indent_4 {
+#xtysrnkflc .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#kxdsbmgrbh) .gt_indent_5 {
+#xtysrnkflc .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">Position_Abbrev</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">Position.Name</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col">Position.Type</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left">SUB</td>
-<td class="gt_row gt_left">Substitute</td>
-<td class="gt_row gt_center">Bench</td></tr>
-    <tr><td class="gt_row gt_left">INT</td>
-<td class="gt_row gt_left">Interchange</td>
-<td class="gt_row gt_center">Bench</td></tr>
-    <tr><td class="gt_row gt_left">HBFR</td>
-<td class="gt_row gt_left">Half-Back Flank Right</td>
-<td class="gt_row gt_center">Defender</td></tr>
-    <tr><td class="gt_row gt_left">BPL</td>
-<td class="gt_row gt_left">Back Pocket Left</td>
-<td class="gt_row gt_center">Defender</td></tr>
-    <tr><td class="gt_row gt_left">FB</td>
-<td class="gt_row gt_left">Full Back</td>
-<td class="gt_row gt_center">Defender</td></tr>
-    <tr><td class="gt_row gt_left">BPR</td>
-<td class="gt_row gt_left">Back Pocket Right</td>
-<td class="gt_row gt_center">Defender</td></tr>
-    <tr><td class="gt_row gt_left">HBFL</td>
-<td class="gt_row gt_left">Half-Back Flank Left</td>
-<td class="gt_row gt_center">Defender</td></tr>
-    <tr><td class="gt_row gt_left">CHB</td>
-<td class="gt_row gt_left">Center Half Back</td>
-<td class="gt_row gt_center">Defender</td></tr>
-    <tr><td class="gt_row gt_left">FF</td>
-<td class="gt_row gt_left">Full Forward</td>
-<td class="gt_row gt_center">Forward</td></tr>
-    <tr><td class="gt_row gt_left">FPL</td>
-<td class="gt_row gt_left">Forward Pocket Left</td>
-<td class="gt_row gt_center">Forward</td></tr>
-    <tr><td class="gt_row gt_left">HFFR</td>
-<td class="gt_row gt_left">Half-Forward Flank</td>
-<td class="gt_row gt_center">Forward</td></tr>
-    <tr><td class="gt_row gt_left">FPR</td>
-<td class="gt_row gt_left">Forward Pocket Right</td>
-<td class="gt_row gt_center">Forward</td></tr>
-    <tr><td class="gt_row gt_left">HFFL</td>
-<td class="gt_row gt_left">Half-Forward Flank Left</td>
-<td class="gt_row gt_center">Forward</td></tr>
-    <tr><td class="gt_row gt_left">CHF</td>
-<td class="gt_row gt_left">Center Half Forward</td>
-<td class="gt_row gt_center">Forward</td></tr>
-    <tr><td class="gt_row gt_left">WL</td>
-<td class="gt_row gt_left">Left Wing</td>
-<td class="gt_row gt_center">Midfield</td></tr>
-    <tr><td class="gt_row gt_left">WR</td>
-<td class="gt_row gt_left">Right Wing</td>
-<td class="gt_row gt_center">Midfield</td></tr>
-    <tr><td class="gt_row gt_left">RR</td>
-<td class="gt_row gt_left">Ruck Rover</td>
-<td class="gt_row gt_center">Midfield</td></tr>
-    <tr><td class="gt_row gt_left">C</td>
-<td class="gt_row gt_left">Center</td>
-<td class="gt_row gt_center">Midfield</td></tr>
-    <tr><td class="gt_row gt_left">R</td>
-<td class="gt_row gt_left">Rover</td>
-<td class="gt_row gt_center">Midfield</td></tr>
-    <tr><td class="gt_row gt_left">RK</td>
-<td class="gt_row gt_left">Ruckman</td>
-<td class="gt_row gt_center">Midfield</td></tr>
-  </tbody>
-  
-  
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border">AFL Position Names and Abbreviations</th>
+</tr>
+<tr class="odd gt_col_headings">
+<th id="<strong>Position Abbreviation</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Position Abbreviation</strong></th>
+<th id="<strong>Position Name</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Position Name</strong></th>
+<th id="<strong>Position Type</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Position Type</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">SUB</td>
+<td class="gt_row gt_left" headers="Position.Name">Substitute</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #000000; color: #FFFFFF">Bench</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">INT</td>
+<td class="gt_row gt_left" headers="Position.Name">Interchange</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #000000; color: #FFFFFF">Bench</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">HBFR</td>
+<td class="gt_row gt_left" headers="Position.Name">Half-Back Flank Right</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #778899; color: #FFFFFF">Defender</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">BPL</td>
+<td class="gt_row gt_left" headers="Position.Name">Back Pocket Left</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #778899; color: #FFFFFF">Defender</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">FB</td>
+<td class="gt_row gt_left" headers="Position.Name">Full Back</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #778899; color: #FFFFFF">Defender</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">BPR</td>
+<td class="gt_row gt_left" headers="Position.Name">Back Pocket Right</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #778899; color: #FFFFFF">Defender</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">HBFL</td>
+<td class="gt_row gt_left" headers="Position.Name">Half-Back Flank Left</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #778899; color: #FFFFFF">Defender</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">CHB</td>
+<td class="gt_row gt_left" headers="Position.Name">Center Half Back</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #778899; color: #FFFFFF">Defender</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">FF</td>
+<td class="gt_row gt_left" headers="Position.Name">Full Forward</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #0288D1; color: #FFFFFF">Forward</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">FPL</td>
+<td class="gt_row gt_left" headers="Position.Name">Forward Pocket Left</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #0288D1; color: #FFFFFF">Forward</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">HFFR</td>
+<td class="gt_row gt_left" headers="Position.Name">Half-Forward Flank</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #0288D1; color: #FFFFFF">Forward</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">FPR</td>
+<td class="gt_row gt_left" headers="Position.Name">Forward Pocket Right</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #0288D1; color: #FFFFFF">Forward</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">HFFL</td>
+<td class="gt_row gt_left" headers="Position.Name">Half-Forward Flank Left</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #0288D1; color: #FFFFFF">Forward</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">CHF</td>
+<td class="gt_row gt_left" headers="Position.Name">Center Half Forward</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #0288D1; color: #FFFFFF">Forward</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">WL</td>
+<td class="gt_row gt_left" headers="Position.Name">Left Wing</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #FFA000; color: #000000">Midfield</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">WR</td>
+<td class="gt_row gt_left" headers="Position.Name">Right Wing</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #FFA000; color: #000000">Midfield</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">RR</td>
+<td class="gt_row gt_left" headers="Position.Name">Ruck Rover</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #FFA000; color: #000000">Midfield</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">C</td>
+<td class="gt_row gt_left" headers="Position.Name">Center</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #FFA000; color: #000000">Midfield</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Position_Abbrev">R</td>
+<td class="gt_row gt_left" headers="Position.Name">Rover</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #FFA000; color: #000000">Midfield</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Position_Abbrev">RK</td>
+<td class="gt_row gt_left" headers="Position.Name">Ruckman</td>
+<td class="gt_row gt_center" headers="Position.Type" style="background-color: #FFA000; color: #000000">Midfield</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 <div class="cell-output-display">
-<p><img src="PositionsExplained_files/figure-html/field-1.png" style="width:125.0%;height:175.0%"></p>
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/field-1.png" style="width:125.0%;height:175.0%" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We can probably make some assumptions about which players might be higher in say, goals than others. Forwards are more likely than defensive players to excel in those types of stats.</p>
@@ -1097,13 +1320,24 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 <section id="per-game-stats" class="level4">
-<h4 class="anchored" data-anchor-id="per-game-stats">Per Game Stats</h4>
+<h4 class="anchored" data-anchor-id="per-game-stats"><strong>Per Game Stats</strong></h4>
 <section id="goals-per-game" class="level5">
-<h5 class="anchored" data-anchor-id="goals-per-game">Goals Per Game</h5>
+<h5 class="anchored" data-anchor-id="goals-per-game"><strong>Goals Per Game</strong></h5>
 <p>The graph paints a pretty self-explanatory and expected picture about which positions score more goals than others. Forward positions dominate the goal scoring with the full forward a full goal over the next highest position at 3.69 average goals per game. Scoring from a defenders position is an absolute rarity with the the half-back flanks averaging 0.28 goals a game, but full backs put up a paltry 0.07 goals per game.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="PositionsExplained_files/figure-html/goals-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/goals-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/goals-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1112,7 +1346,11 @@ ul.task-list li input[type="checkbox"] {
 <p>Behinds are very similar to goals in how they are scored so we’d expect a strong correlation with goals. We can see that from a position standpoint, the story plays out the same as goals.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="PositionsExplained_files/figure-html/behinds-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/behinds-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1121,26 +1359,70 @@ ul.task-list li input[type="checkbox"] {
 <p>Tackles per game are led by the center midfield positions of Rover, Ruck Rover, and Center. While from an American perspective, one may have assumed the more defensive positions would lead in this state, it make sense having watched a few games how much of the hectic position play occurs in the midfield where teams are contesting for position. An attempted goal may take place 40 or 50 meters out meaning defenders may be playing much deeper and have less opportunities to make tackles.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="PositionsExplained_files/figure-html/tackles-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/tackles-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/tackles-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
-<section id="disposal-per-game" class="level5">
-<h5 class="anchored" data-anchor-id="disposal-per-game">Disposal Per Game</h5>
+<section id="disposals-per-game" class="level5">
+<h5 class="anchored" data-anchor-id="disposals-per-game">Disposals Per Game</h5>
 <p>Disposals are essentially “the pass” of the AFL and can be done either by hand (handballs) or foot (kicks) which I break out below. Once again, a majority your disposals come from those central midfield positions followed by some of the wing positions. Forwards tend to be much lower in these stats. This plays out similarly for handballs and kicks, though the position of Ruckman is quite interesting. we see Ruckman put out about 12 handballs per game, but come in the lowest for kicks at 14.4</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="PositionsExplained_files/figure-html/disposals per game-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/disposals per game-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/disposals per game-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="PositionsExplained_files/figure-html/handballs per game-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/handballs per game-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/handballs per game-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="PositionsExplained_files/figure-html/kicks per game-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/kicks per game-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/kicks per game-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1149,13 +1431,720 @@ ul.task-list li input[type="checkbox"] {
 <p>The position with the most marks on average in a game is Center Half Back with the Full Back and Half-Back Flanks on either side following behind Center Half Back. So a Mark is something it seems a defender does more often than other positions. That said, the distribution isn’t much difference from the max down to the min in terms of spread.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="PositionsExplained_files/figure-html/marks per game-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/marks per game-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PositionsExplained_files/figure-html/marks per game-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="final-summary" class="level3">
+<h3 class="anchored" data-anchor-id="final-summary">Final Summary</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming afl_pos_stats is your dataframe</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Update column names for readability</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>afl_pos_stats <span class="ot">&lt;-</span> afl_pos_stats <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">" "</span>, .x), <span class="at">.cols =</span> <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, .x), <span class="at">.cols =</span> <span class="fu">everything</span>())</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a blue color gradient function using ggsci's palette</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>blue_gradient <span class="ot">&lt;-</span> scales<span class="sc">::</span><span class="fu">col_numeric</span>(<span class="at">pal =</span> <span class="fu">pal_npg</span>(<span class="st">"nrc"</span>)(<span class="dv">100</span>), <span class="at">domain =</span> <span class="cn">NULL</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the GT table</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>afl_table <span class="ot">&lt;-</span> afl_pos_stats <span class="sc">%&gt;%</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Position Name</span><span class="st">`</span>, <span class="st">`</span><span class="at">Position Type</span><span class="st">`</span>, position, <span class="st">`</span><span class="at">goals per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">behinds per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">disposals per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">handballs per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">kicks per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">tackles per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">marks per game</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"AFL Stats Per Game Averages - By Position"</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Position Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Position Name"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Position Type</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Position Type"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"Position"</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">goals per game</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Goals Per Game"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">behinds per game</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Behinds Per Game"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">disposals per game</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Disposals Per Game"</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">handballs per game</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Handballs Per Game"</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">kicks per game</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Kicks Per Game"</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">tackles per game</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Tackles Per Game"</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">marks per game</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Marks Per Game"</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(<span class="st">`</span><span class="at">goals per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">behinds per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">disposals per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">handballs per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">kicks per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">tackles per game</span><span class="st">`</span>, <span class="st">`</span><span class="at">marks per game</span><span class="st">`</span>),</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> blue_gradient</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the table</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(afl_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;div id="xpojrpuwsd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;"&gt;
+  &lt;style&gt;#xpojrpuwsd table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#xpojrpuwsd thead, #xpojrpuwsd tbody, #xpojrpuwsd tfoot, #xpojrpuwsd tr, #xpojrpuwsd td, #xpojrpuwsd th {
+  border-style: none;
+}
+
+#xpojrpuwsd p {
+  margin: 0;
+  padding: 0;
+}
+
+#xpojrpuwsd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xpojrpuwsd .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xpojrpuwsd .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xpojrpuwsd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xpojrpuwsd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xpojrpuwsd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xpojrpuwsd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xpojrpuwsd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xpojrpuwsd .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#xpojrpuwsd .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#xpojrpuwsd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xpojrpuwsd .gt_from_md &gt; :first-child {
+  margin-top: 0;
+}
+
+#xpojrpuwsd .gt_from_md &gt; :last-child {
+  margin-bottom: 0;
+}
+
+#xpojrpuwsd .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xpojrpuwsd .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xpojrpuwsd .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xpojrpuwsd .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xpojrpuwsd .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#xpojrpuwsd .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xpojrpuwsd .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xpojrpuwsd .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xpojrpuwsd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xpojrpuwsd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xpojrpuwsd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xpojrpuwsd .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xpojrpuwsd .gt_left {
+  text-align: left;
+}
+
+#xpojrpuwsd .gt_center {
+  text-align: center;
+}
+
+#xpojrpuwsd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xpojrpuwsd .gt_font_normal {
+  font-weight: normal;
+}
+
+#xpojrpuwsd .gt_font_bold {
+  font-weight: bold;
+}
+
+#xpojrpuwsd .gt_font_italic {
+  font-style: italic;
+}
+
+#xpojrpuwsd .gt_super {
+  font-size: 65%;
+}
+
+#xpojrpuwsd .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#xpojrpuwsd .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xpojrpuwsd .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xpojrpuwsd .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xpojrpuwsd .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xpojrpuwsd .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xpojrpuwsd .gt_indent_5 {
+  text-indent: 25px;
+}
+&lt;/style&gt;
+  &lt;table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false"&gt;
+  &lt;thead&gt;
+    &lt;tr class="gt_heading"&gt;
+      &lt;td colspan="10" class="gt_heading gt_title gt_font_normal gt_bottom_border" style&gt;AFL Stats Per Game Averages - By Position&lt;/td&gt;
+    &lt;/tr&gt;
+    
+    &lt;tr class="gt_col_headings"&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Position Name"&gt;Position Name&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Position Type"&gt;Position Type&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Position"&gt;Position&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Goals Per Game"&gt;Goals Per Game&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Behinds Per Game"&gt;Behinds Per Game&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Disposals Per Game"&gt;Disposals Per Game&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Handballs Per Game"&gt;Handballs Per Game&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Kicks Per Game"&gt;Kicks Per Game&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Tackles Per Game"&gt;Tackles Per Game&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="Marks Per Game"&gt;Marks Per Game&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class="gt_table_body"&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Half-Back Flank Right&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Defender&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;HBFR&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #8FC0BF; color: #000000;"&gt;0.28&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #B09C85; color: #FFFFFF;"&gt;0.24&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;39.34&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;13.31&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;26.03&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;4.65&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;10.40&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Full Forward&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Forward&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;FF&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;3.69&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;2.14&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #E64B35; color: #FFFFFF;"&gt;23.20&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #E64B35; color: #FFFFFF;"&gt;7.69&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #D4C7BA; color: #000000;"&gt;15.51&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;3.63&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;8.78&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Forward Pocket Left&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Forward&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;FPL&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;2.55&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;1.66&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #A48E76; color: #FFFFFF;"&gt;25.52&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.43&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;16.10&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;4.70&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;7.85&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Back Pocket Left&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Defender&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;BPL&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #89ABB7; color: #000000;"&gt;0.10&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #C0897F; color: #FFFFFF;"&gt;0.06&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;29.43&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.57&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;19.86&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;3.54&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.79&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Left Wing&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Midfield&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;WL&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.76&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.66&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;35.73&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;14.00&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;21.72&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;4.83&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.12&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Right Wing&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Midfield&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;WR&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.89&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.68&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;37.20&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;14.63&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;22.57&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;4.99&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.32&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Full Back&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Defender&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;FB&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #E64B35; color: #FFFFFF;"&gt;0.07&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #E64B35; color: #FFFFFF;"&gt;0.05&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #AE9982; color: #FFFFFF;"&gt;25.57&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #8E92B1; color: #FFFFFF;"&gt;8.52&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;17.04&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #E64B35; color: #FFFFFF;"&gt;2.68&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;10.27&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Half-Forward Flank&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Forward&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;HFFR&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;1.68&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;1.30&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;30.17&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;12.63&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;17.55&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;6.16&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;7.30&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Ruck Rover&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Midfield&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;RR&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.71&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.62&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;49.16&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;24.35&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;24.81&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.41&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;7.16&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Forward Pocket Right&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Forward&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;FPR&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;2.29&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;1.54&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #C63618; color: #FFFFFF;"&gt;25.12&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #D8CDC1; color: #000000;"&gt;9.29&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;15.83&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;5.18&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;7.31&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Back Pocket Right&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Defender&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;BPR&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #2AAAA3; color: #FFFFFF;"&gt;0.13&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #3B6088; color: #FFFFFF;"&gt;0.11&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;29.09&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.46&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;19.63&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;3.69&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.42&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Half-Forward Flank Left&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Forward&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;HFFL&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;1.95&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;1.16&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;29.25&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;11.45&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;17.80&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;5.66&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;7.54&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Half-Back Flank Left&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Defender&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;HBFL&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #8FC0BF; color: #000000;"&gt;0.28&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #987F67; color: #FFFFFF;"&gt;0.23&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;37.11&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;12.35&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;24.76&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;4.22&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;10.24&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Center&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Midfield&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;C&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.86&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.74&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;49.41&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;23.84&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;25.57&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;9.23&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;7.75&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Rover&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Midfield&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;R&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.80&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.72&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;44.55&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;21.41&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;23.14&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;8.80&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;7.16&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Center Half Back&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Defender&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;CHB&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #2AAAA3; color: #FFFFFF;"&gt;0.13&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #DA998D; color: #000000;"&gt;0.14&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;32.71&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;10.28&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;22.44&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;3.48&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;11.08&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Center Half Forward&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Forward&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;CHF&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;2.49&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;1.65&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;27.14&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;10.79&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;16.35&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;4.18&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;8.33&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="Position Name" class="gt_row gt_left"&gt;Ruckman&lt;/td&gt;
+&lt;td headers="Position Type" class="gt_row gt_center"&gt;Midfield&lt;/td&gt;
+&lt;td headers="position" class="gt_row gt_left"&gt;RK&lt;/td&gt;
+&lt;td headers="goals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.74&lt;/td&gt;
+&lt;td headers="behinds per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;0.53&lt;/td&gt;
+&lt;td headers="disposals per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;26.49&lt;/td&gt;
+&lt;td headers="handballs per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;12.09&lt;/td&gt;
+&lt;td headers="kicks per game" class="gt_row gt_right" style="background-color: #E64B35; color: #FFFFFF;"&gt;14.40&lt;/td&gt;
+&lt;td headers="tackles per game" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;"&gt;5.32&lt;/td&gt;
+&lt;td headers="marks per game" class="gt_row gt_right" style="background-color: #E64B35; color: #FFFFFF;"&gt;5.59&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  
+  
+&lt;/table&gt;
+&lt;/div&gt;</code></pre>
 </div>
 </div>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1186,9 +2175,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1224,10 +2227,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1237,8 +2239,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1253,6 +2264,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1293,6 +2536,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

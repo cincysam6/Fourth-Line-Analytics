@@ -4,4 +4,303 @@ author: "Samuel Kirschner"
 date: "2023-07-21"
 categories: [AFL,Intro to AFL]
 image: "buddy.jpg"
+format: 
+  html:
+    code-folding: hide
 ---
+
+```{r}
+library(RPostgres)
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(gt))
+suppressPackageStartupMessages(library(gtExtras))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(stringr))
+```
+
+A look into AFL player statistics 2017 - 2023
+
+```{r}
+
+AFL_logos<-read.csv("AFL_logos.csv")
+
+# Replace these placeholders with your actual PostgreSQL credentials
+db_host <- "localhost"
+db_name <- "AFL_data"
+db_user <- "postgres"
+db_password <- "Cincinnati1"
+
+# Construct the connection string
+con_string <- paste0("host=", db_host,
+                     " dbname=", db_name,
+                     " user=", db_user,
+                     " password=", db_password)
+
+# Establish the connection
+con <- dbConnect(RPostgres::Postgres(), dbname = db_name, user = db_user,
+                 password = db_password, host = db_host)
+
+
+
+# Years range (update this based on your data)
+start_year <- 2017
+end_year <- 2023
+
+# Create an empty list to store data frames
+data_list <- list()
+
+# Loop through each year
+for (year in start_year:end_year) {
+  # Generate the table name for the specific year
+  table_name <- paste0("afl_player_season_stats_", year)
+  
+  # Fetch data from the table for the current year
+  query <- paste0("SELECT * FROM ", table_name)
+  data <- dbGetQuery(con, query)
+  
+  # Append the data to the list
+  data_list[[year - start_year + 1]] <- data
+}
+
+afl_player_stats <- do.call(rbind, data_list)
+
+
+
+# Loop through each year
+for (year in start_year:end_year) {
+  # Generate the table name for the specific year
+  table_name <- paste0("player_percentile_ranks_", year)
+  
+  # Fetch data from the table for the current year
+  query <- paste0("SELECT * FROM ", table_name)
+  data <- dbGetQuery(con, query)
+  
+  # Append the data to the list
+  data_list[[year - start_year + 1]] <- data
+}
+
+afl_player_percentiles <- do.call(rbind, data_list)
+
+player_details <-dbGetQuery(con,"SELECT * FROM afl_player_info")
+
+
+
+```
+
+```{r}
+disposal_stats<-c("disposals","kicks","handballs","clangers","inside50s","kicksPer80","disposalsPer80",'handballsPer80','clangersPer80','inside50sPer80')
+
+possession_stats<-c("turnovers","contestedPossessions","uncontestedPossessions","bounces","turnoversPer80","contestedPossessionsPer80","uncontestedPossessionsPer80","bouncesPer80")
+
+scoring_stats<-c("goals","behinds","goalAssists","shotsAtGoal","goalsPer80","behindsPer80","goalAssistsPer80","shotsAtGoalPer80")
+
+mark_stats<-c("marks","contestedMarks","marksInside50","marksPer80","contestedMarksPer80","marksInside50Per80")
+
+defensive_stats<-c("tackles",'tacklesInside50',"intercepts","hitouts","tacklesPer80","interceptsPer80","hitoutsPer80","tacklesInside50Per80")
+
+
+```
+
+```{r}
+
+player_details$position<-gsub("_"," ",player_details$position)
+
+columns_to_round<-c("goalsPer80","behindsPer80","disposalsPer80","marksPer80")
+
+single_player_stats<-afl_player_stats%>%filter(first_name=="Lance" & last_name=='Franklin')%>%distinct()
+
+# Round the specified metrics to 2 decimal places
+single_player_stats <- single_player_stats %>%
+  mutate_at(vars(all_of(columns_to_round)), ~ round(., 2))
+
+
+player_photo<-afl_player_stats%>%filter(first_name=="Lance" & last_name=='Franklin')%>%filter(year==max(year))%>%distinct()
+
+player_details<-player_details%>%mutate(age=floor(as.numeric(difftime(Sys.Date(), player_details$dateOfBirth, units = "days"))/365.25))
+
+player_info<-player_details%>%filter(firstName=="Lance" & surname=="Franklin")%>%filter(season==max(year))%>%distinct()
+
+
+```
+
+```{r}
+
+
+### NEED TO ADD UNIQUE POSITIONS, ADD PERCENTILES, ADD GRAPHS?
+
+
+single_player_stats %>%
+  select(year,
+         team.name,
+         games_played,
+         minutes_played,
+         goals,
+         behinds,
+         disposals,
+         marks,
+         goalsPer80, 
+         behindsPer80, 
+         disposalsPer80, 
+         marksPer80)%>%arrange(desc(year))%>%mutate(minutes_played=round(minutes_played,0))%>%
+  gt() %>%gt_theme_espn()%>%
+  tab_header(title = htmltools::HTML(paste0(web_image(url = player_photo$photoURL,height=px(75)), "<span style='font-size: 24px;'>","<b>Player Name: </b>",player_info$firstName," ",player_info$surname,"     <b>Team: </b> ",player_info$team,"</span>"  )),subtitle = htmltools::HTML(paste0("<span style='font-size: 18px;'>","<b>Position:</b> ",str_to_title(player_info$position), "  <b>Age:</b> ",player_info$age, "   <b>Debut:</b> ",player_info$debutYear),"</span>")) %>%
+  tab_style(style = cell_text(weight = "bold"), locations = cells_body(columns = c(team.name,year)))%>%opt_align_table_header(align = "left")
+
+
+```
+
+```{r}
+
+
+### ADD THE VALUE TO THE TABLE AND WE ARE GOLDEN
+
+
+single_player_perc<-afl_player_percentiles%>%filter(first_name=="Lance" & last_name=='Franklin')%>%distinct()
+
+
+percentile_table<-single_player_perc %>%
+  select(year,goals,
+         contestedMarks,
+         goalAssists,
+         behinds,
+         disposals,
+         kicks,
+         handballs,
+         tacklesInside50,
+         contestedPossessions,
+         intercepts,
+         goalAssists,
+         shotsAtGoal,
+         tackles,
+         turnovers,
+         hitouts,
+         marks)%>%filter(year==2022)%>%select(-year)
+
+longer_table <- percentile_table %>%
+  pivot_longer(
+    cols = c(goals,
+         contestedMarks,
+         goalAssists,
+         behinds,
+         disposals,
+         kicks,
+         handballs,
+         tacklesInside50,
+         contestedPossessions,
+         intercepts,
+         goalAssists,
+         shotsAtGoal,
+         tackles,
+         turnovers,
+         hitouts,
+         marks),
+    names_to = "metric",
+    values_to = "value"
+  )
+
+longer_table<-longer_table%>%mutate(stat_type = case_when(metric %in% scoring_stats ~ 'Scoring',metric %in% possession_stats ~ 'Possession',metric %in% disposal_stats ~"Disposals",metric %in% defensive_stats ~ 'Defensive',metric %in% mark_stats~"Marks",TRUE~"other"))
+
+longer_table%>%gt(rowname_col = "row", groupname_col="stat_type")%>%gt_duplicate_column(value,dupe_name = "percentile_rank") %>%gt_plt_percentile(percentile_rank)%>%
+  gt_theme_espn()%>%
+  tab_header(title = htmltools::HTML(paste0(web_image(url = player_photo$photoURL,height=px(75)), "<span style='font-size: 18px;'>","<b>Player Name: </b>",player_info$firstName," ",player_info$surname,"     <b>Team: </b> ",player_info$team," <b>Position:</b>",str_to_title(player_info$position),"  <b>Age: </b>",player_info$age,"</span>"  ))) %>%opt_align_table_header(align = "left")
+
+
+
+```
+
+```{r}
+afl_player_stats%>%distinct()%>%
+  filter(year==2022 & minutes_played > 500)%>%
+  arrange(desc(goalsPer80))%>%
+  slice_head(n=10)%>%
+  select(photoURL,first_name,last_name,team.name,minutes_played,goals,goalsPer80)%>%
+  mutate(goalsPer80 = round(goalsPer80,3),
+         minutes_played = round(minutes_played,0))%>%
+  gt()%>%
+  gt_img_rows(columns=photoURL,img_source="web")%>%
+  tab_header(title="2022 Season Leaders - GoalsPer80")%>%
+  cols_label(photoURL="",
+             first_name = "First Name",
+             last_name = "Last Name",
+             team.name= "Team",
+             minutes_played = "Minutes Played")
+```
+
+```{r}
+afl_player_stats%>%distinct()%>%
+  filter(year==2022 & minutes_played > 500)%>%
+  arrange(desc(goals))%>%
+  slice_head(n=10)%>%
+  select(photoURL,first_name,last_name,team.name,minutes_played,goals)%>%
+  mutate(minutes_played = round(minutes_played,0))%>%
+  gt()%>%
+  gt_img_rows(columns=photoURL,img_source="web")%>%
+  tab_header(title="2022 Season Leaders - Total Goals")%>%
+  cols_label(photoURL="",
+             first_name = "First Name",
+             last_name = "Last Name",
+             team.name= "Team",
+             minutes_played = "Minutes Played")
+```
+
+```{r}
+afl_player_stats%>%distinct()%>%
+  filter(year==2022 & minutes_played > 500)%>%
+  arrange(desc(goalsPer80))%>%
+  select(photoURL,first_name,last_name,team.name,minutes_played,goals,goalsPer80)%>%
+  mutate(goalsPer80 = round(goalsPer80,3),
+         minutes_played = round(minutes_played,0))%>%
+  gt()%>%
+  gt_color_rows(goals:goalsPer80, palette = "ggsci::blue_material")%>%
+  gt_img_rows(columns=photoURL,img_source="web")%>%
+  tab_header(title="2022 Season Leaders - GoalsPer80")%>%
+  cols_label(photoURL="",
+             first_name = "First Name",
+             last_name = "Last Name",
+             team.name= "Team",
+             minutes_played = "Minutes Played")%>% opt_interactive(
+    use_search = TRUE, use_filters = TRUE, 
+    use_compact_mode = TRUE, page_size_default = 10
+  )
+```
+
+```{r}
+afl_player_stats%>%distinct()%>%
+  filter(year==2022 & team.name=="Richmond")%>%
+  arrange(desc(goalsPer80))%>%
+  mutate(goalsPer80 = round(goalsPer80,3),
+         minutes_played = round(minutes_played,0))%>%
+  gt()%>%
+  gt_color_rows(goals:goalsPer80, palette = "ggsci::blue_material")%>%
+  gt_img_rows(columns=photoURL,img_source="web")%>%
+  tab_header(title="2022 Season Leaders - GoalsPer80")%>%
+  cols_label(photoURL="",
+             first_name = "First Name",
+             last_name = "Last Name",
+             team.name= "Team",
+             minutes_played = "Minutes Played")%>% opt_interactive(
+    use_search = TRUE, use_filters = TRUE, 
+    use_compact_mode = TRUE, page_size_default = 50
+  )%>%opt_css(
+    css = "
+    #one .gt_stub {
+    position: sticky;
+    left: 0;
+    }
+    
+    #one .gt_col_heading {
+    position: sticky;
+    top: 0;
+    }
+
+    thead th:first-child {
+    left: 0;
+    z-index: 2;
+    }
+    
+     #one .gt_table {
+ border-collapse: separate;
+ border-spacing: 0;
+ }")
+```

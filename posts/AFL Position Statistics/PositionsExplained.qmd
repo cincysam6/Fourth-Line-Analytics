@@ -1,9 +1,12 @@
 ---
-title: "AFL Positions Explained Through Statistics"
+title: "Position Primer: Basic Stats by AFL Position"
 author: "Samuel Kirschner"
-date: "2023-07-21"
-categories: [AFL,Intro to AFL]
-image: "Aussie-rules-1-750x422.jpg"
+date: "2024-02-07"
+categories: [AFL, Intro to AFL]
+image: "buddy.jpg"
+format: 
+  html:
+    code-folding: hide
 ---
 
 ### **Learning about AFL positional play through statistics**
@@ -37,15 +40,32 @@ afl_stats<-read.csv("afl_player_stats_2022.csv")
 
 Let's take a look at what positions we have in the data. It seems that we have 20 unique position codes using abbreviations. Below is a table that gives an example of what we see. Given I don't have the knowledge to interpret these abbreviations I will have to go outside the data set to try and make some type of key to the full name for each position.
 
-```{r player positions, echo=FALSE}
-afl_stats<-afl_stats%>%rename(position = player.player.position )
-afl_stats%>%select(position)%>%unique()%>%head()%>%gt()
+```{r player positions}
+afl_stats<-afl_stats%>%rename(position = player.player.position)
+
+afl_stats %>%
+  select(position) %>%
+  unique() %>%
+  gt() %>%
+  tab_header(
+    title = "AFL Player Position Abbreviations"
+  ) %>%
+  cols_label(
+    position = md("**Position**")
+  ) %>%
+  gtExtras::gt_theme_espn()
 ```
 
 Let's breakdown these positions similar to how we'd break down football (soccer) positions on the pitch; attack, midfield and defense. In attack we have 6 players, midfield we have 6 players and defense we have 6 players. The position names are listed in the table and the associated graph shows roughly where they play on the oval.
 
 ```{r field, echo=FALSE,out.width='125%',out.height='175%'}
 
+afl_colors <- c(
+    Bench = "black",
+    Defender = "#778899",
+    Midfield = "#0288D1",
+    Forward = "#FFA000"
+)
 
 # Create basic AFL field
 dim <- list(length = 160,
@@ -53,20 +73,48 @@ dim <- list(length = 160,
 pos<-read.csv("AFL_Positions.csv")
 pos<-pos%>%mutate(Position.Type = as.factor(Position.Type))
 
-field<-ggplot(data = pos,aes(X,Y,fill = Position.Type)) + 
-  geom_point(aes(colour=Position.Type),size=3)+ 
-  geom_text(aes(label=Position_Abbrev,check_overlap=TRUE),position=position_dodge(width=0.9),vjust=-1,size = 3,color="white") +
-  scale_colour_ghibli_d("PonyoMedium") +
-  theme(panel.background = element_rect(fill = "#BFD834"),panel.grid = element_blank(),axis.text.y= element_blank(),axis.text.x =element_blank(),plot.title = element_text(hjust=0.5))+ 
-  xlab(element_blank())+ 
-  ylab(element_blank())+
-  guides(size='none')+
+field <- ggplot(data = pos %>% filter(Position.Type != 'Bench'), aes(X, Y, fill = Position.Type)) + 
+  geom_point(aes(colour = Position.Type), size = 3) + 
+  geom_text(aes(label = Position_Abbrev, check_overlap = TRUE), position = position_dodge(width = 0.7), vjust = -1.5, size = 3, color = "white", fontface = "bold") +
+  scale_fill_manual(values = afl_colors) +
+  scale_colour_manual(values = afl_colors) +
+  theme(panel.background = element_rect(fill = "#BFD834"), 
+        panel.grid = element_blank(),
+        axis.text.y = element_blank(),
+        legend.title = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(), 
+        axis.ticks.y = element_blank(),
+        legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5)) + 
+  xlab(element_blank()) + 
+  ylab(element_blank()) +
+  guides(size = 'none') +
   annotate_afl_oval(dim) + 
   ggtitle("AFL Positions")
 
 
 
-pos_table<-pos%>%select(Position_Abbrev,Position.Name,Position.Type)%>%arrange(Position.Type)%>%gt()
+pos_table <- pos %>%
+  select(Position_Abbrev, Position.Name, Position.Type) %>%
+  arrange(Position.Type) %>%
+  gt() %>%
+  tab_header(title = "AFL Position Names and Abbreviations") %>%
+  cols_label(
+    Position_Abbrev = md("**Position Abbreviation**"),
+    Position.Name = md("**Position Name**"),
+    Position.Type = md("**Position Type**")
+  ) %>%
+  data_color(
+    columns = vars(Position.Type),
+    colors = scales::col_factor(
+      palette = afl_colors, 
+      domain = pos$Position.Type
+    )
+  )
+
+
+  
 
 
 pos_table
@@ -134,39 +182,55 @@ afl_pos_stats<-afl_position_stats%>%left_join(pos,by=c("position"="Position_Abbr
 afl_pos_stats%>%gt()%>%tab_header(title = "2022 AFL stats - All Matches")
 ```
 
-#### Per Game Stats
+#### **Per Game Stats**
 
-##### Goals Per Game
+##### **Goals Per Game**
 
 The graph paints a pretty self-explanatory and expected picture about which positions score more goals than others. Forward positions dominate the goal scoring with the full forward a full goal over the next highest position at 3.69 average goals per game. Scoring from a defenders position is an absolute rarity with the the half-back flanks averaging 0.28 goals a game, but full backs put up a paltry 0.07 goals per game.
 
 ```{r goals, echo=FALSE}
 
-goal_plot<-ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,goals_per_game),y=goals_per_game)) +
-  geom_bar(position="dodge",stat="identity") + 
+goal_plot <- ggplot(data = afl_pos_stats, aes(x = reorder(Position.Name, goals_per_game), y = goals_per_game)) +
+  geom_bar(position = "dodge", stat = "identity") +
   coord_flip() +
-  ggtitle("Goals Per Game By Position") + xlab("") + ylab("goals per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = goals_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,4)
+  ggtitle("Goals Per Game By Position") +
+  xlab("") +
+  ylab("Goals per game") +
+  theme_wsj(base_size = 10) +
+  theme(plot.title = element_text(size = 16), axis.text.x = element_blank()) +
+  geom_text(aes(label = goals_per_game), hjust = -0.5, size = 4) + 
+  scale_color_manual(values = afl_colors) + # Apply custom colors
+  ylim(0, 4)
 
 goal_plot
 
 ## Removing for now
 
-#goal_field<-ggplot(data = afl_pos_stats,aes(X,Y,fill = Position.Type)) + 
-#  geom_point(aes(colour=Position.Type),size=3)+ 
-#  geom_text(aes(label=goals_per_game,check_overlap=TRUE),position = position_nudge##(x = 0.2, y = -0.2),vjust=-1,size = 3,color="white",fontface="bold") +
-#  scale_colour_ghibli_d("PonyoMedium") +
-#  theme(panel.background = element_rect(fill = "#BFD834"),panel.grid = element_blank(),axis.text.y= element_blank(),axis.text.x =element_blank(),plot.title = element_text(hjust=0.5))+ 
-#  xlab(element_blank())+ 
-#  ylab(element_blank())+
- # guides(size='none')+
-#  annotate_afl_oval(dim) + 
-#  ggtitle("AFL Positions") 
+goal_field <- ggplot(data = afl_pos_stats, aes(X, Y, size = goals_per_game, fill = Position.Type)) + 
+  geom_point(aes(colour = Position.Type), pch = 21) +  # pch = 21 for filled circle with border
+  scale_colour_manual(values = afl_colors) + 
+  scale_fill_manual(values = afl_colors) +  # Apply custom palette for fill as well
+  guides(size = "none") +  # Remove size legend
+  theme(panel.background = element_rect(fill = "#BFD834"), 
+        panel.grid = element_blank(), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        plot.title = element_text(hjust = 0.5),
+        legend.position = "none") +  # Remove all legends
+  xlab(element_blank()) + 
+  ylab(element_blank()) +
+  annotate_afl_oval(dim) +  # Assuming this function draws the AFL oval
+  geom_text(aes(label = goals_per_game, check_overlap = TRUE), position = position_nudge(x = 0.2, y = -0.2), vjust = -1, size = 3, color = "white", fontface = "bold") +
+  ggtitle("AFL Positions by Goals Per Game")
 
-# Arrange the plots side by side
-#side_by_side_plots <- cowplot::plot_grid(goal_plot, goal_field, ncol = 2)
 
-# Display the side-by-side plots
-#print(side_by_side_plots)
+
+goal_field
+
+
+
 ```
 
 ##### Behinds Per Game
@@ -174,10 +238,34 @@ goal_plot
 Behinds are very similar to goals in how they are scored so we'd expect a strong correlation with goals. We can see that from a position standpoint, the story plays out the same as goals.
 
 ```{r behinds, echo=FALSE}
-ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,behinds_per_game),y=behinds_per_game)) +
+behind_plot<-ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,behinds_per_game),y=behinds_per_game)) +
   geom_bar(position="dodge",stat="identity") + 
   coord_flip() +
   ggtitle("Behinds Per Game By Position") + xlab("") + ylab("Behinds per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = behinds_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,4)
+
+
+behind_field <- ggplot(data = afl_pos_stats, aes(X, Y, size = behinds_per_game, fill = Position.Type)) + 
+  geom_point(aes(colour = Position.Type), pch = 21) +  # pch = 21 for filled circle with border
+  scale_colour_manual(values = afl_colors) + 
+  scale_fill_manual(values = afl_colors) +  # Apply custom palette for fill as well
+  guides(size = "none") +  # Remove size legend
+  theme(panel.background = element_rect(fill = "#BFD834"), 
+        panel.grid = element_blank(), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        plot.title = element_text(hjust = 0.5),
+        legend.position = "none") +  # Remove all legends
+  xlab(element_blank()) + 
+  ylab(element_blank()) +
+  annotate_afl_oval(dim) +  # Assuming this function draws the AFL oval
+  geom_text(aes(label = behinds_per_game, check_overlap = TRUE), position = position_nudge(x = 0.2, y = -0.2), vjust = -1, size = 3, color = "white", fontface = "bold") +
+  ggtitle("Behinds Per Game - By Position")
+
+
+
+behind_field
 ```
 
 ##### Tackles Per Game
@@ -189,9 +277,32 @@ ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,tackles_per_game),y=tackl
   geom_bar(position="dodge",stat="identity") + 
   coord_flip() +
   ggtitle("Tackles Per Game By Position") + xlab("") + ylab("tackles per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = tackles_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,11)
+
+tackle_field <- ggplot(data = afl_pos_stats, aes(X, Y, size = tackles_per_game, fill = Position.Type)) + 
+  geom_point(aes(colour = Position.Type), pch = 21) +  # pch = 21 for filled circle with border
+  scale_colour_manual(values = afl_colors) + 
+  scale_fill_manual(values = afl_colors) +  # Apply custom palette for fill as well
+  guides(size = "none") +  # Remove size legend
+  theme(panel.background = element_rect(fill = "#BFD834"), 
+        panel.grid = element_blank(), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        plot.title = element_text(hjust = 0.5),
+        legend.position = "none") +  # Remove all legends
+  xlab(element_blank()) + 
+  ylab(element_blank()) +
+  annotate_afl_oval(dim) +  # Assuming this function draws the AFL oval
+  geom_text(aes(label = tackles_per_game, check_overlap = TRUE), position = position_nudge(x = 0.2, y = -0.2), vjust = -1, size = 3, color = "white", fontface = "bold") +
+  ggtitle("Tackles Per Game - By Position")
+
+
+
+tackle_field
 ```
 
-##### Disposal Per Game
+##### Disposals Per Game
 
 Disposals are essentially "the pass" of the AFL and can be done either by hand (handballs) or foot (kicks) which I break out below. Once again, a majority your disposals come from those central midfield positions followed by some of the wing positions. Forwards tend to be much lower in these stats. This plays out similarly for handballs and kicks, though the position of Ruckman is quite interesting. we see Ruckman put out about 12 handballs per game, but come in the lowest for kicks at 14.4
 
@@ -200,6 +311,30 @@ ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,disposals_per_game),y=dis
   geom_bar(position="dodge",stat="identity") + 
   coord_flip() +
   ggtitle("Disposals Per Game By Position") + xlab("") + ylab("disposals per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = disposals_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,52)
+
+
+disposal_field <- ggplot(data = afl_pos_stats, aes(X, Y, size = disposals_per_game, fill = Position.Type)) + 
+  geom_point(aes(colour = Position.Type), pch = 21) +  # pch = 21 for filled circle with border
+  scale_colour_manual(values = afl_colors) + 
+  scale_fill_manual(values = afl_colors) +  # Apply custom palette for fill as well
+  guides(size = "none") +  # Remove size legend
+  theme(panel.background = element_rect(fill = "#BFD834"), 
+        panel.grid = element_blank(), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        plot.title = element_text(hjust = 0.5),
+        legend.position = "none") +  # Remove all legends
+  xlab(element_blank()) + 
+  ylab(element_blank()) +
+  annotate_afl_oval(dim) +  # Assuming this function draws the AFL oval
+  geom_text(aes(label = round(disposals_per_game,1), check_overlap = TRUE), position = position_nudge(x = 0.2, y = -0.2), vjust = -1, size = 3, color = "white", fontface = "bold") +
+  ggtitle("Disposals Per Game - By Position")
+
+
+
+disposal_field
 ```
 
 ```{r handballs per game, echo=FALSE}
@@ -207,6 +342,29 @@ ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,handballs_per_game),y=han
   geom_bar(position="dodge",stat="identity") + 
   coord_flip() +
   ggtitle("Handballs Per Game By Position") + xlab("") + ylab("handballs per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = handballs_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,25)
+
+handball_field <- ggplot(data = afl_pos_stats, aes(X, Y, size = handballs_per_game, fill = Position.Type)) + 
+  geom_point(aes(colour = Position.Type), pch = 21) +  # pch = 21 for filled circle with border
+  scale_colour_manual(values = afl_colors) + 
+  scale_fill_manual(values = afl_colors) +  # Apply custom palette for fill as well
+  guides(size = "none") +  # Remove size legend
+  theme(panel.background = element_rect(fill = "#BFD834"), 
+        panel.grid = element_blank(), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        plot.title = element_text(hjust = 0.5),
+        legend.position = "none") +  # Remove all legends
+  xlab(element_blank()) + 
+  ylab(element_blank()) +
+  annotate_afl_oval(dim) +  # Assuming this function draws the AFL oval
+  geom_text(aes(label = round(handballs_per_game,1), check_overlap = TRUE), position = position_nudge(x = 0.2, y = -0.2), vjust = -1, size = 3, color = "white", fontface = "bold") +
+  ggtitle("Handballs Per Game - By Position")
+
+
+
+handball_field
 ```
 
 ```{r kicks per game, echo=FALSE}
@@ -214,6 +372,29 @@ ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,kicks_per_game),y=kicks_p
   geom_bar(position="dodge",stat="identity") + 
   coord_flip() +
   ggtitle("Kicks Per Game By Position") + xlab("") + ylab("kicks per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = kicks_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,30)
+
+kick_field <- ggplot(data = afl_pos_stats, aes(X, Y, size = kicks_per_game, fill = Position.Type)) + 
+  geom_point(aes(colour = Position.Type), pch = 21) +  # pch = 21 for filled circle with border
+  scale_colour_manual(values = afl_colors) + 
+  scale_fill_manual(values = afl_colors) +  # Apply custom palette for fill as well
+  guides(size = "none") +  # Remove size legend
+  theme(panel.background = element_rect(fill = "#BFD834"), 
+        panel.grid = element_blank(), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        plot.title = element_text(hjust = 0.5),
+        legend.position = "none") +  # Remove all legends
+  xlab(element_blank()) + 
+  ylab(element_blank()) +
+  annotate_afl_oval(dim) +  # Assuming this function draws the AFL oval
+  geom_text(aes(label = round(kicks_per_game,1), check_overlap = TRUE), position = position_nudge(x = 0.2, y = -0.2), vjust = -1, size = 3, color = "white", fontface = "bold") +
+  ggtitle("Kicks Per Game - By Position")
+
+
+
+kick_field
 ```
 
 ##### Marks per Game
@@ -225,4 +406,79 @@ ggplot(data=afl_pos_stats, aes(x=reorder(Position.Name,marks_per_game),y=marks_p
   geom_bar(position="dodge",stat="identity") + 
   coord_flip() +
   ggtitle("Marks Per Game By Position") + xlab("") + ylab("marks per game") + theme_wsj(base_size = 10)+ theme(plot.title = element_text(size = 16),axis.text.x = element_blank())+ geom_text(aes(label = marks_per_game), hjust = -0.5, color = "dark blue", size = 3) + ylim(0,25)
+
+marks_field <- ggplot(data = afl_pos_stats, aes(X, Y, size = marks_per_game, fill = Position.Type)) + 
+  geom_point(aes(colour = Position.Type), pch = 21) +  # pch = 21 for filled circle with border
+  scale_colour_manual(values = afl_colors) + 
+  scale_fill_manual(values = afl_colors) +  # Apply custom palette for fill as well
+  guides(size = "none") +  # Remove size legend
+  theme(panel.background = element_rect(fill = "#BFD834"), 
+        panel.grid = element_blank(), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        plot.title = element_text(hjust = 0.5),
+        legend.position = "none") +  # Remove all legends
+  xlab(element_blank()) + 
+  ylab(element_blank()) +
+  annotate_afl_oval(dim) +  # Assuming this function draws the AFL oval
+  geom_text(aes(label = round(marks_per_game,1), check_overlap = TRUE), position = position_nudge(x = 0.2, y = -0.2), vjust = -1, size = 3, color = "white", fontface = "bold") +
+  ggtitle("Marks Per Game - By Position")
+
+
+marks_field
+```
+
+### Final Summary
+
+```{r}
+
+
+library(gt)
+library(dplyr)
+library(ggsci)
+library(scales)
+
+# Assuming afl_pos_stats is your dataframe
+# Update column names for readability
+afl_pos_stats <- afl_pos_stats %>%
+  rename_with(~ gsub("\\.", " ", .x), .cols = everything()) %>%
+  rename_with(~ gsub("_", " ", .x), .cols = everything())
+
+# Define a blue color gradient function using ggsci's palette
+blue_gradient <- scales::col_numeric(pal = pal_npg("nrc")(100), domain = NULL)
+
+# Generate the GT table
+afl_table <- afl_pos_stats %>%
+  select(`Position Name`, `Position Type`, position, `goals per game`, `behinds per game`, `disposals per game`, `handballs per game`, `kicks per game`, `tackles per game`, `marks per game`) %>%
+  gt() %>%
+  tab_header(
+    title = "AFL Stats Per Game Averages - By Position"
+  ) %>%
+  cols_label(
+    `Position Name` = "Position Name",
+    `Position Type` = "Position Type",
+    position = "Position",
+    `goals per game` = "Goals Per Game",
+    `behinds per game` = "Behinds Per Game",
+    `disposals per game` = "Disposals Per Game",
+    `handballs per game` = "Handballs Per Game",
+    `kicks per game` = "Kicks Per Game",
+    `tackles per game` = "Tackles Per Game",
+    `marks per game` = "Marks Per Game"
+  ) %>%
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels(columns = TRUE)
+  ) %>%
+  data_color(
+    columns = vars(`goals per game`, `behinds per game`, `disposals per game`, `handballs per game`, `kicks per game`, `tackles per game`, `marks per game`),
+    colors = blue_gradient
+  )
+
+# Print the table
+print(afl_table)
+
+
 ```
