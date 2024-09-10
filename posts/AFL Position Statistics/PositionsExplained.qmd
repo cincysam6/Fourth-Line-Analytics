@@ -30,6 +30,11 @@ suppressMessages(library(ggrepel))
 suppressMessages(library(ggthemes))
 suppressMessages(library(ghibli))
 suppressMessages(library(cowplot))
+library(gt)
+library(dplyr)
+library(ggsci)
+library(scales)
+
 
 ```
 
@@ -40,7 +45,7 @@ afl_stats<-read.csv("afl_player_stats_2022.csv")
 
 Let's take a look at what positions we have in the data. It seems that we have 20 unique position codes using abbreviations. Below is a table that gives an example of what we see. Given I don't have the knowledge to interpret these abbreviations I will have to go outside the data set to try and make some type of key to the full name for each position.
 
-```{r player positions}
+```{r player positions, echo=FALSE}
 afl_stats<-afl_stats%>%rename(position = player.player.position)
 
 afl_stats %>%
@@ -135,6 +140,8 @@ Before looking at the statistics broken out by position it is important for us t
 
 -   **Goals**: This is when a player kicks the ball between the two center goal post and it is NOT touched by another player or touches either goalpost.
 
+    ![gif_test](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTlmbmRtMW5ydWhldjRsc2NzMTJsNGxqYmVlNzVxMjk2aG50ZmR3MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/55pSPZpaAQqtMCNF0E/giphy.gif)
+
 -   **Behinds**: A *behind*, worth 1 point, is scored when the ball passes between a goal post and a behind post at any height, or if the ball hits a goal post, or if any player sends the ball between the goal posts by touching it with any part of the body other than a foot. A behind is also awarded to the attacking team if the ball touches any part of an opposition player, including a foot, before passing between the goal posts
 
 -   **Marks**: A mark is a catch of the kicked ball which earns the catching player a free kick. The catch must be clearly taken and the umpire has to deem it to be a clean position. Marks can be some of the cooler plays from my perspective as someone new to the sport. The best way I can describe it in NFL terms is as if a run play magically turned into a punt which turned into a hail mary scenario with a jump ball between the target and defenders. You can mark the ball after:
@@ -168,13 +175,13 @@ afl_position_stats<-afl_stats%>%
          handballs = sum(handballs),
          tackles = sum(tackles),
          marks = sum(marks),
-         goals_per_game = round(goals/games,2),
-         behinds_per_game = round(behinds/games,2),
-         disposals_per_game = round(disposals/games,2),
-         handballs_per_game = round(handballs/games,2),
-         kicks_per_game = round(kicks/games,2),
-         tackles_per_game = round(tackles/games,2),
-         marks_per_game = round(marks/games,2)
+         goals_per_game = round(goals/games,1),
+         behinds_per_game = round(behinds/games,1),
+         disposals_per_game = round(disposals/games,1),
+         handballs_per_game = round(handballs/games,1),
+         kicks_per_game = round(kicks/games,1),
+         tackles_per_game = round(tackles/games,1),
+         marks_per_game = round(marks/games,1)
          )%>%select(-providerId)%>%ungroup()%>%unique()
 
 afl_pos_stats<-afl_position_stats%>%left_join(pos,by=c("position"="Position_Abbrev"))%>%select(Position.Name,everything())
@@ -432,53 +439,60 @@ marks_field
 
 ### Final Summary
 
-```{r}
+```{r final summary, echo=FALSE}
+# Define AFL custom color palette for position types
+afl_colors <- c(
+    Defender = "#778899",
+    Midfield = "#0288D1",
+    Forward = "#FFA000"
+)
 
+# Map the custom palette to the 'Position.Type' factor levels using scales::col_factor()
+position_type_colors <- scales::col_factor(palette = afl_colors, domain = c("Defender", "Midfield", "Forward"))
 
-library(gt)
-library(dplyr)
-library(ggsci)
-library(scales)
+# Define a custom blue color gradient function with the specified 8 colors
+custom_blue_palette <- c("#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", 
+                         "#6baed6", "#4292c6", "#2171b5", "#084594")
+blue_gradient <- scales::col_numeric(pal = custom_blue_palette, domain = NULL)
 
-# Assuming afl_pos_stats is your dataframe
-# Update column names for readability
-afl_pos_stats <- afl_pos_stats %>%
-  rename_with(~ gsub("\\.", " ", .x), .cols = everything()) %>%
-  rename_with(~ gsub("_", " ", .x), .cols = everything())
+# Correctly adjust 'Position Type' to a factor with levels in the exact order
+# Make sure the levels exactly match the data in your dataframe
+afl_pos_stats$Position.Type <- factor(afl_pos_stats$Position.Type, 
+                                        levels = c("Forward", "Midfield", "Defender"))
 
-# Define a blue color gradient function using ggsci's palette
-blue_gradient <- scales::col_numeric(pal = pal_npg("nrc")(100), domain = NULL)
-
-# Generate the GT table
+# Generate the GT table, now sorting by 'Position Type' in the specified order
 afl_table <- afl_pos_stats %>%
-  select(`Position Name`, `Position Type`, position, `goals per game`, `behinds per game`, `disposals per game`, `handballs per game`, `kicks per game`, `tackles per game`, `marks per game`) %>%
+  arrange(Position.Type) %>%
+  select(Position.Name, Position.Type, position, goals_per_game, behinds_per_game, disposals_per_game, handballs_per_game, kicks_per_game, tackles_per_game, marks_per_game) %>%
   gt() %>%
   tab_header(
     title = "AFL Stats Per Game Averages - By Position"
   ) %>%
   cols_label(
-    `Position Name` = "Position Name",
-    `Position Type` = "Position Type",
+    Position.Name = "Position Name",
+    Position.Type = "Position Type",
     position = "Position",
-    `goals per game` = "Goals Per Game",
-    `behinds per game` = "Behinds Per Game",
-    `disposals per game` = "Disposals Per Game",
-    `handballs per game` = "Handballs Per Game",
-    `kicks per game` = "Kicks Per Game",
-    `tackles per game` = "Tackles Per Game",
-    `marks per game` = "Marks Per Game"
+    goals_per_game = "Goals Per Game",
+    behinds_per_game = "Behinds Per Game",
+    disposals_per_game = "Disposals Per Game",
+    handballs_per_game = "Handballs Per Game",
+    kicks_per_game = "Kicks Per Game",
+    tackles_per_game = "Tackles Per Game",
+    marks_per_game = "Marks Per Game"
   ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels(columns = TRUE)
   ) %>%
   data_color(
-    columns = vars(`goals per game`, `behinds per game`, `disposals per game`, `handballs per game`, `kicks per game`, `tackles per game`, `marks per game`),
+    columns = vars(Position.Type),
+    colors = position_type_colors
+  ) %>%
+  data_color(
+    columns = vars(goals_per_game, behinds_per_game, disposals_per_game, handballs_per_game, kicks_per_game, tackles_per_game, marks_per_game),
     colors = blue_gradient
   )
 
 # Print the table
-print(afl_table)
-
-
+afl_table
 ```
